@@ -19,7 +19,7 @@ $(EXECUTABLE): $(OBJECTS) 				#taget: requisits(dependency) \enter\tab shell com
 #@ - mute output                    $@ - compilation target name
 
 #PREPROCESSING + COMPILATION
-onegin_o/%.o: stack_cpps/%.cpp
+stack_o/%.o: stack_cpps/%.cpp
 	@$(CC) $(CFLAGS) $< -o $@
 # make *.o file from current *.c file with ded_flags
 # $< - first requisit $@ - compilation target name(EXECUTABLE)

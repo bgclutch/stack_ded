@@ -1,53 +1,149 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
-#include "stack.h"
+
+#include "../stack_headers/stack.h"
+
+#define ADDRESSES_CHECKING stack_data && stack_data->stack_array
+#define NEED_CAPACITY_INCR stack_data->counter  - stack_data->capacity == 1
+#define NEED_CAPACITY_DECR stack_data->counter * (size_t)REALLOC_COEF ==  stack_data->capacity
+
 
 int ctor_stack(Main_Stack_Struct *stack_data)
 {
-    stack_data->stack_array = (char*) calloc(FIRST_TIME_STRUCT_CTOR, stack_data->data_type_size);
-    stack_data->capacity    = (size_t)FIRST_TIME_STRUCT_CTOR;
+    stack_data->stack_array = (char*) calloc(STRUCT_CTOR_SIZE, stack_data->data_type_size);
+    stack_data->capacity    = (size_t)STRUCT_CTOR_SIZE;
+    stack_data->capacity_coefficient = 1;
     stack_data->counter     = 0;
     stack_data->stack_code_return = ALL_IS_OK;
+    stack_dump(stack_data, "ctor_stack");
+
+    return 1;
 }
 
 int dtor_stack(Main_Stack_Struct *stack_data)
 {
-    if()//address and meanings
-    free(stack_data->stack_array);
+    stack_dump(stack_data, "dtor_stack");
+
+    if(ADDRESSES_CHECKING)//address and meanings
+    {
+        memset(stack_data->stack_array, '\n', stack_data->counter);
+        stack_data->counter = 0;
+        stack_data->capacity = (size_t)STRUCT_CTOR_SIZE;
+        stack_data->stack_array = (char*) realloc(stack_data->stack_array, stack_data->capacity);
+    }
     //FIXME add smth else
+    stack_dump(stack_data, "dtor_stack");
+
+    return 1;
 }
 
 
 int stack_push(Main_Stack_Struct *stack_data)
 {
+    stack_dump(stack_data, "stack_push");
+
+    if(NEED_CAPACITY_INCR)
+    {
+        stack_data->capacity_coefficient ++;
+        realloc_maker(stack_data);
+    }
+
+    if(ADDRESSES_CHECKING)//for realloc
+    {
+        stack_data->counter++;
+        stack_data->stack_array[stack_data->counter - 1] = (char)stack_data->stack_elem; 
+    }
     //FIXME check ptrs & segfaults
-    stack_data->counter++;
-    if()//for realloc
-
-
-    stack_data->stack_array[stack_data->counter - 1] = stack_data->stack_elem; 
+    stack_dump(stack_data, "stack_push");
 
     //return checker;
+    return 1;
 }
 
-int stack_pop(Main_Stack_Struct *stack_data)
+int stack_pop(Main_Stack_Struct *stack_data) //FIXME error checking
 {
-    stack_data->stack_array[stack_data-> counter - 1] = NULL;
+    stack_dump(stack_data, "stack_pop"); 
 
-    //struct decrementation
+    if (ADDRESSES_CHECKING)
+    {
+        stack_data->stack_array[stack_data-> counter - 1] = '\n';
+        stack_data->counter--;        
+    }
+    
+    if(NEED_CAPACITY_DECR) //realloc
+    {
+        stack_data->capacity_coefficient -= 2;
+        realloc_maker(stack_data);
+    }
 
-    if() //realloc
-    //sreturn checker;
+    //FIXME add realloc func
+
+    stack_dump(stack_data, "stack_pop");
+
+    //return checker;
+    return 1;
 }
 
 
-void_sex stack_dump()
+void_sex stack_dump(Main_Stack_Struct *stack_data, const char* call_func_name)
 {
+    put_stars(stack_data->aboba);
+    fprintf  (stack_data->aboba, "%s\n", call_func_name);
+    put_stars(stack_data->aboba);
+    
+    fprintf  (stack_data->aboba, "stack address: %p\n", stack_data->stack_array);
+    for(size_t i = 0; i < stack_data->counter; i++)
+    {
+        fprintf(stack_data->aboba, "stack element %lu: %c\n", i, stack_data->stack_array[i]);
+    }
+    put_stars(stack_data->aboba);
+
+    fprintf  (stack_data->aboba, "stack elem push/pop: %g\n",                  stack_data->stack_elem);
+    fprintf  (stack_data->aboba, "stack elem push/pop address: %p\n",         &(stack_data->stack_elem));
+    put_stars(stack_data->aboba);          
+     
+    fprintf  (stack_data->aboba, "stack counter: %lu\n",                        stack_data->counter);
+    fprintf  (stack_data->aboba, "stack counter address: %p\n",               &(stack_data->counter));
+    put_stars(stack_data->aboba);          
+     
+    fprintf  (stack_data->aboba, "stack capacity: %lu\n",                       stack_data->capacity);
+    fprintf  (stack_data->aboba, "stack capacity address: %p\n",              &(stack_data->capacity));
+    put_stars(stack_data->aboba);          
+ 
+    fprintf  (stack_data->aboba, "stack capacity coefficient: %lu\n",          stack_data->capacity_coefficient);
+    fprintf  (stack_data->aboba, "stack capacity coefficient address: %p\n",  &(stack_data->capacity_coefficient));
+    put_stars(stack_data->aboba);
+ 
+    fprintf  (stack_data->aboba, "stack code return: %d\n",                   stack_data->stack_code_return);
+    fprintf  (stack_data->aboba, "stack code return address: %p\n",           &(stack_data->stack_code_return));
+
+    put_stars(stack_data->aboba);
+    fprintf(stack_data->aboba, "\n\n\n\n\n\n\n\n");
     //printf every address meaning etc
 }
 
-int stack_is_err()
+
+// int stack_is_err()
+// {
+//     //err checker
+// }
+
+
+int realloc_maker(Main_Stack_Struct *stack_data)
 {
-    //err checker
+    stack_data->stack_array = (char*) realloc(stack_data->stack_array, stack_data->capacity_coefficient * (size_t)STRUCT_CTOR_SIZE);
+
+    return ADDRESSES_CHECKING ? (int)ALL_IS_OK : (int)SMTH_WAS_BROKEN;
+}
+
+
+void put_stars(FILE* file)
+{
+    for(int i = 0; i < 100; i++)
+    {
+        fputc('*', file);
+    }
+    fputc('\n', file);
 }

@@ -9,14 +9,31 @@ struct Main_Stack_Struct stack_data = {};
 
 int main(void)
 {
-    char test[] = {'a', '1', '77', 'k', '!', '@'};
+    stack_data.aboba = fopen("stack_output.txt", "w");
 
-    stack_data.data_type_size = sizeof(test[0]);//FIXME later
+    char test[] = {'a', '1', '^', 'k', '!', '@', '4', '/', 'j'};
+
+    stack_data.data_type_size = sizeof(test[0]);//FIXME change it to console parsing later
     
     ctor_stack(&stack_data);
 
-    stack_push(&stack_data);
+    for(size_t i = 0; i < sizeof(test) / sizeof(char); i++)
+    {
+        stack_data.stack_elem = test[i];
+        stack_push(&stack_data);
+    }
 
+    for(size_t i = 0; i < sizeof(test) / sizeof(stack_data.data_type_size); i++)
+    {
+        stack_pop(&stack_data);
+    }
+
+    dtor_stack(&stack_data);
+
+    free(stack_data.stack_array);
+
+    if(fclose(stack_data.aboba))
+        printf("ty eblan\n");
 
     return 0;
 }
