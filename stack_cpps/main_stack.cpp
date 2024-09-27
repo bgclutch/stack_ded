@@ -4,7 +4,7 @@
 #include "../stack_headers/stack.h"
 
 
-struct Main_Stack_Struct stack_data = {};
+struct Main_Stack_Struct stack_data = {}; // FIXME global
 
 
 int main(void)
@@ -23,7 +23,7 @@ int main(void)
         stack_push(&stack_data);
     }
 
-    for(size_t i = 0; i < sizeof(test) / sizeof(stack_data.data_type_size); i++)
+    for(long i = stack_data.counter - 1; i >= 0; i++)
     {
         stack_pop(&stack_data);
     }
@@ -32,8 +32,8 @@ int main(void)
 
     free(stack_data.stack_array);
 
-    if(fclose(stack_data.aboba))
-        printf("ty eblan\n");
+    if(fclose(stack_data.aboba) != 0)
+        printf("ty eblan?\n");
 
     return 0;
 }
