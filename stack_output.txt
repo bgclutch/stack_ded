@@ -1,0 +1,1519 @@
+******************************
+stack_cpps/stack_functions.cpp ctor_stack:30
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 0
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 0
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 1
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 1
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 2
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000011
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 2
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000011
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 3
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000011
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000012
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 3
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000011
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000012
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 4
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000011
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000012
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000013
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000010
+stack address end: 0x602000000015
+******************************
+stack size: 4
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000010
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000011
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000012
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000013
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 5
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 5
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 6
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 6
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 7
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000036
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 7
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000036
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 8
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000036
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000037
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 8
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000036
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000037
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 9
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000036
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000037
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x602000000038
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x602000000030
+stack address end: 0x60200000003a
+******************************
+stack size: 9
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000030
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000031
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000032
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000033
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000034
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000035
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000036
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000037
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x602000000038
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x603000000040
+stack address end: 0x603000000054
+******************************
+stack size: 10
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 20
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x603000000040
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x603000000041
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x603000000042
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x603000000043
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x603000000044
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x603000000045
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x603000000046
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x603000000047
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x603000000048
+
+stack element non empty 9: 4
+stack element non empty 9 address: 0x603000000049
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:66
+******************************
+stack address begin: 0x603000000040
+stack address end: 0x603000000054
+******************************
+stack size: 10
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 20
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x603000000040
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x603000000041
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x603000000042
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x603000000043
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x603000000044
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x603000000045
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x603000000046
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x603000000047
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x603000000048
+
+stack element non empty 9: 4
+stack element non empty 9 address: 0x603000000049
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_push:77
+******************************
+stack address begin: 0x603000000040
+stack address end: 0x603000000054
+******************************
+stack size: 11
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 20
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x603000000040
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x603000000041
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x603000000042
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x603000000043
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x603000000044
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x603000000045
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x603000000046
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x603000000047
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x603000000048
+
+stack element non empty 9: 4
+stack element non empty 9 address: 0x603000000049
+
+stack element non empty 10: o
+stack element non empty 10 address: 0x60300000004a
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x603000000040
+stack address end: 0x603000000054
+******************************
+stack size: 11
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 20
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x603000000040
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x603000000041
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x603000000042
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x603000000043
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x603000000044
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x603000000045
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x603000000046
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x603000000047
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x603000000048
+
+stack element non empty 9: 4
+stack element non empty 9 address: 0x603000000049
+
+stack element non empty 10: o
+stack element non empty 10 address: 0x60300000004a
+
+******************************
+
+
+
+
+popped elem o
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 10
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000057
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x602000000058
+
+stack element non empty 9: 4
+stack element non empty 9 address: 0x602000000059
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 10
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000057
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x602000000058
+
+stack element non empty 9: 4
+stack element non empty 9 address: 0x602000000059
+
+******************************
+
+
+
+
+popped elem 4
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 9
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000057
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x602000000058
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 9
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000057
+
+stack element non empty 8: j
+stack element non empty 8 address: 0x602000000058
+
+******************************
+
+
+
+
+popped elem j
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 8
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000057
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 8
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+stack element non empty 7: /
+stack element non empty 7 address: 0x602000000057
+
+******************************
+
+
+
+
+popped elem /
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 7
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 7
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+stack element non empty 6: 4
+stack element non empty 6 address: 0x602000000056
+
+******************************
+
+
+
+
+popped elem 4
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 6
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000050
+stack address end: 0x60200000005a
+******************************
+stack size: 6
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 10
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000050
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000051
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000052
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000053
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000054
+
+stack element non empty 5: @
+stack element non empty 5 address: 0x602000000055
+
+******************************
+
+
+
+
+popped elem @
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 5
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000072
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000073
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000074
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 5
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000072
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000073
+
+stack element non empty 4: !
+stack element non empty 4 address: 0x602000000074
+
+******************************
+
+
+
+
+popped elem !
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 4
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000072
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000073
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 4
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000072
+
+stack element non empty 3: k
+stack element non empty 3 address: 0x602000000073
+
+******************************
+
+
+
+
+popped elem k
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 3
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000072
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 3
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+stack element non empty 2: ^
+stack element non empty 2 address: 0x602000000072
+
+******************************
+
+
+
+
+popped elem ^
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 2
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 2
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+stack element non empty 1: 1
+stack element non empty 1 address: 0x602000000071
+
+******************************
+
+
+
+
+popped elem 1
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 1
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp stack_pop:86
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 1
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+stack element non empty 0: a
+stack element non empty 0 address: 0x602000000070
+
+******************************
+
+
+
+
+popped elem a
+******************************
+stack_cpps/stack_functions.cpp stack_pop:109
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 0
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+******************************
+
+
+
+
+******************************
+stack_cpps/stack_functions.cpp dtor_stack:37
+******************************
+stack address begin: 0x602000000070
+stack address end: 0x602000000075
+******************************
+stack size: 0
+stack size address: 0x7ffea50e5b38
+******************************
+stack capacity: 5
+stack capacity address: 0x7ffea50e5b40
+******************************
+******************************
+
+
+
+
