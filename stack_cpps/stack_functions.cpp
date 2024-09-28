@@ -137,16 +137,16 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
         fprintf(stack_data->aboba, "stack element non empty %lu address: %p\n\n", i, &(stack_data->stack_array[i]));
     }
     
-    // for(size_t i = stack_data->size; i < stack_data->capacity; i++)//printing empty element
-    // {
-    //     if(stack_data->size > stack_data->capacity)
-    //     {
-    //         fprintf(stderr, "PIZDEC %s:%d", __func__, __LINE__);
-    //         assert(0);
-    //     }
-    //     fprintf(stack_data->aboba, "stack element empty %lu: %c\n",           i,  stack_data->stack_array[i]);
-    //     fprintf(stack_data->aboba, "stack element empty %lu address: %p\n\n", i, &(stack_data->stack_array[i]));
-    // }
+    for(size_t i = stack_data->size; i < stack_data->capacity; i++)//printing empty element
+    {
+        if(stack_data->size > stack_data->capacity)
+        {
+            fprintf(stderr, "PIZDEC %s:%d", __func__, __LINE__);
+            assert(0);
+        }
+        fprintf(stack_data->aboba, "stack element empty %lu: %c\n",           i,  stack_data->stack_array[i]);
+        fprintf(stack_data->aboba, "stack element empty %lu address: %p\n\n", i, &(stack_data->stack_array[i]));
+    }
     
 
     // TODO print empty elements
@@ -165,24 +165,41 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
 // }
 
 
-int realloc_maker(Main_Stack_Struct *stack_data, int var) // FIXME add checker
+Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int var) // FIXME add checker
 {
     if(!is_struct_addresses_okay(stack_data))
         return SMTH_WAS_BROKEN;
 
+    if(is_arr_incr_need(stack_data))
+        Error_Codes sigma = NEED_; 
+
+    size_t new_capacity = stack_data->capacity;
+    
     if(var == 1)
     {
-        stack_data->stack_array = (char*) realloc(stack_data->stack_array, stack_data->capacity* 2); // FIXME fix check
-        stack_data->capacity *= 2;
+        new_capacity *= 2;
     }
     else if(var == 2)
     {
-        stack_data->stack_array = (char*) realloc(stack_data->stack_array, stack_data->capacity / 2); // FIXME fix check
-        stack_data->capacity /= 2;
+        new_capacity /= 2;
     }
 
-    if(stack_data->stack_array == nullptr)
+
+    StackElem_t *new_array = (StackElem_t*) realloc(stack_data->stack_array, new_capacity); // FIXME fix check
+
+    if(var == 1)
+        memset(&new_array[stack_data->size], '\0', (new_capacity - stack_data->size) * sizeof(StackElem_t));
+
+
+    if(stack_data->stack_array != nullptr)
+    {
+        stack_data->capacity = new_capacity;
+        stack_data->stack_array = new_array;
+    }
+    else
+    {
         return SMTH_WAS_BROKEN; //TODO add spec error code
+    }
 
     return ALL_IS_OK;
 }
@@ -190,7 +207,7 @@ int realloc_maker(Main_Stack_Struct *stack_data, int var) // FIXME add checker
 
 void put_stars(FILE* file)
 {
-    for(int i = 0; i < 30; i++)
+    for(int i = 0; i < 50; i++)
     {
         fputc('*', file);
     }
@@ -210,7 +227,7 @@ int is_arr_incr_need(Main_Stack_Struct stack_data)
 
 int is_arr_decr_need(Main_Stack_Struct stack_data)
 {
-    if(stack_data.size * 2 <= stack_data.capacity && stack_data.size >= 5)
+    if(stack_data.size * 2 <= stack_data.capacity && stack_data.size >= 4)
         return 1;
     else
         return 0;

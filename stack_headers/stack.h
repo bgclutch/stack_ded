@@ -7,16 +7,21 @@
 typedef void void_sex;
 typedef char StackElem_t;
 
-enum Program_Codes 
+enum Error_Codes 
 {
     SMTH_WAS_BROKEN    = 0,
     ALL_IS_OK          = 1,
-    REALLOC_COEF       = 4,
     //ADD SOME ERRORS CODES
     //realloc error (na podumat')
 
-    STRUCT_CTOR_SIZE   = 5
+    STRUCT_CTOR_SIZE   = 4
 
+};
+
+enum Realloc_Codes
+{
+    REAL_UP = 1,
+    REAL_DOWN = 2
 };
 
 // FIXME make typedef StackElem_t
@@ -24,7 +29,7 @@ enum Program_Codes
 struct Main_Stack_Struct
 {
     StackElem_t* stack_array;
-    size_t size;
+    size_t      size;
     size_t capacity;
     FILE* aboba;
 };
@@ -56,6 +61,7 @@ int is_struct_addresses_okay(Main_Stack_Struct *stack_data);
 void put_stars(FILE* file);
 
 
-int realloc_maker(Main_Stack_Struct *stack_data, int var);
+Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int var);
+
 
 #endif //STACK_H_
