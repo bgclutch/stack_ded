@@ -23,7 +23,7 @@ int main(void)
         stack_push(&stack_data, elem);
     }
 
-    for(size_t i = stack_data.size; i >= 1; i--)
+    for(long long i = stack_data.size; i >= 1; i--)
     {
         stack_pop(&stack_data, &elem);
     }

@@ -1,3 +1,6 @@
 stack
 ./stack_o/*
 ./stack_output.txt
+.vscode
+*.o 
+

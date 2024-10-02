@@ -5,147 +5,196 @@
 
 
 #include "../stack_headers/stack.h"
+#include "../stack_headers/colorised_output.h"
 
+
+//#define BREAK_MODE
 #define STACK_DUMP(stack_data) stack_dump(stack_data, __FILE__, __func__, __LINE__) 
+#define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
 
+
+const long long canary_meaning = 0x71EBCEE;                         //FIXME ???
+const long long canary_slide = sizeof(long long) / sizeof(StackElem_t);
 StackElem_t My_Empty_Element = '\0';
 
 
-int ctor_stack(Main_Stack_Struct *stack_data, size_t size)
+
+Error_Codes ctor_stack(Main_Stack_Struct *stack_data, size_t size)
 {
-    if(stack_data == nullptr && stack_data->stack_array == nullptr)
+    if(stack_data == nullptr && stack_data->extended_arr == nullptr)
         return SMTH_WAS_BROKEN;
 
-    stack_data->stack_array = (char*) calloc(STRUCT_CTOR_SIZE, size); // FIXME check
+    stack_data->extended_arr = (char*) calloc(STRUCT_CTOR_SIZE, size + 2 * canary_slide); // FIXME check
 
-    if(stack_data->stack_array == nullptr) //hueta check
+    if(stack_data->extended_arr == nullptr) //hueta check
         return SMTH_WAS_BROKEN;  
 
+
+    stack_data->stack_array = (stack_data->extended_arr + canary_slide);
+    
     stack_data->capacity = (size_t)STRUCT_CTOR_SIZE; // TODO refactor
     stack_data->size     = 0; // FIXME rename
 
-    for(size_t i = 0; i < stack_data->capacity; i++)
+
+    stack_data->left_st_canary  = canary_meaning;
+    stack_data->right_st_canary = canary_meaning;
+
+
+    fprintf(stderr, "begin of extended arr %p\nbegin of stack array %p\n\n", stack_data->extended_arr, stack_data->stack_array);
+
+    fprintf(stderr, "capacity base %lld capacity counted %ld\n\n", stack_data->capacity, &stack_data->extended_arr[(size_t)stack_data->capacity + 2 * canary_slide] - stack_data->extended_arr);
+
+    fprintf(stderr, "end of stack array %p\nend of extended array %p\n\n", &stack_data->stack_array[stack_data->capacity], &stack_data->extended_arr[(size_t)stack_data->capacity + 2 * canary_slide]);
+    //TODO add right canary
+
+    for(long long i = 0; i < stack_data->capacity; i++)
         stack_data->stack_array[i] = My_Empty_Element;
 
-    STACK_DUMP(stack_data);
 
-    return ALL_IS_OK; // TODO return error and remove stack_code_return field
+    fprintf(stderr, "aboba %d\n\n", stack_data->stack_array[30]); //FIXME WTF
+
+    put_canaries(stack_data);
+    
+    RETURN_ERROR(stack_is_err(stack_data));
+    STACK_DUMP(stack_data);
+    return ALL_IS_OK;
+                                 // TODO return error and remove stack_code_return field
 }
 
-int dtor_stack(Main_Stack_Struct *stack_data)
+Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
 {
+    RETURN_ERROR(stack_is_err(stack_data));
     STACK_DUMP(stack_data);
 
     if(!is_struct_addresses_okay(stack_data))//address and meanings
         return SMTH_WAS_BROKEN;
 
-    memset(stack_data->stack_array, My_Empty_Element, stack_data->size);
+    memset(stack_data->stack_array, My_Empty_Element, (size_t)stack_data->size);
 
-    for(size_t i = 0; i < stack_data->size; i++)
+    for(long long i = 0; i < stack_data->size; i++)
     {
         if(stack_data->stack_array[i] != My_Empty_Element)
             return SMTH_WAS_BROKEN;
     }
 
-    stack_data->size = 0;
-    stack_data->capacity = 0;
+    stack_data->size            = 0;
+    stack_data->capacity        = 0;
+    stack_data->left_st_canary  = 0;
+    stack_data->right_st_canary = 0;
     // FIXME free
     free(stack_data->stack_array); // FIXME check
 
     if(stack_data->stack_array != nullptr) //FREE STACK
         return SMTH_WAS_BROKEN;
     //FIXME add smth else
-    STACK_DUMP(stack_data);
 
+    RETURN_ERROR(stack_is_err(stack_data));
+    STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
 
 
-int stack_push(Main_Stack_Struct *stack_data, StackElem_t elem) // FIXME pass elem as argument
+Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem) // FIXME pass elem as argument
 {
+    RETURN_ERROR(stack_is_err(stack_data));
     STACK_DUMP(stack_data);
 
     if(!is_struct_addresses_okay(stack_data))
         return SMTH_WAS_BROKEN;
 
     if(is_arr_incr_need(*stack_data)) // FIXME avoid using macros. Make functions
-        realloc_maker(stack_data, 1); //check errors
+        realloc_maker(stack_data); //check errors
 
     stack_data->size++;
     stack_data->stack_array[stack_data->size - 1] = elem; // FIXME cringe
-    //FIXME check ptrs & segfaults
-    STACK_DUMP(stack_data);
 
-    //return checker;
+    //FIXME check ptrs & segfaults
+
+    #ifdef BREAK_MODE
+    {
+        stack_data->left_st_canary = 0;
+        stack_data->size = -4;
+        stack_data->capacity = -10;
+        stack_data->aboba = nullptr;
+        stack_data->stack_array = nullptr;
+        stack_data->right_st_canary = 8874187721;
+        
+    }
+    #endif
+
+    RETURN_ERROR(stack_is_err(stack_data));
+    STACK_DUMP(stack_data);
     return ALL_IS_OK;
+    //return checker;
 }
 
 //FIXME error checking
-int stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem) // FIXME return popped value through pointer (not in struct)
+Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem) // FIXME return popped value through pointer (not in struct)
 {
+    RETURN_ERROR(stack_is_err(stack_data));
     STACK_DUMP(stack_data); 
 
     if(!is_struct_addresses_okay(stack_data))
     {
         return SMTH_WAS_BROKEN;
     }
-    // fprintf(stack_data->aboba, "size (printed between dumps!!!): %lu\n", stack_data->size);
-    // fprintf(stack_data->aboba, "stack array[%lu]: %c\n",stack_data->size - 1, stack_data->stack_array[stack_data->size - 1]);
+    
     if(stack_data->size == 0) //FIXME fix check
     {
         return SMTH_WAS_BROKEN;
     }
+
     *elem = stack_data->stack_array[stack_data->size - 1]; 
     fprintf(stack_data->aboba, "popped elem %c\n", *elem);
+
     stack_data->stack_array[stack_data->size - 1] = My_Empty_Element;  
     (stack_data->size)--;  
+
+
     if(is_arr_decr_need(*stack_data)) //realloc
-        realloc_maker(stack_data, 2);
-    // fprintf(stack_data->aboba, "size (printed after dumps!!!): %lu\n", stack_data->size);
-    // fprintf(stack_data->aboba, "stack array[%lu]: %c\n",stack_data->size - 1, stack_data->stack_array[stack_data->size - 1]);
+        realloc_maker(stack_data);
+   
             
     //FIXME add realloc func
 
+    RETURN_ERROR(stack_is_err(stack_data));
     STACK_DUMP(stack_data); // TODO use macros
+    return ALL_IS_OK;
 
     //return checker;
-    return ALL_IS_OK;
 }
 
 
 void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const char* func_name, size_t line) //add checks
 {
+    RETURN_ERROR(stack_is_err(stack_data));
+
     put_stars(stack_data->aboba);
     fprintf  (stack_data->aboba, "%s %s:%lu\n", file_name, func_name, line);
     put_stars(stack_data->aboba);
     
-    fprintf  (stack_data->aboba, "stack address begin: %p\n", stack_data->stack_array);
-    fprintf  (stack_data->aboba, "stack address end: %p\n", &stack_data->stack_array[stack_data->capacity]);
+    fprintf  (stack_data->aboba, "stack address begin: %p\n",     stack_data->stack_array);
+    fprintf  (stack_data->aboba, "stack address end: %p\n",      &stack_data->stack_array[stack_data->capacity]);
     put_stars(stack_data->aboba);
-
-    fprintf  (stack_data->aboba, "stack size: %lu\n",              stack_data->size);
+ 
+    fprintf  (stack_data->aboba, "stack size: %lld\n",             stack_data->size);
     fprintf  (stack_data->aboba, "stack size address: %p\n",     &(stack_data->size));
     put_stars(stack_data->aboba); 
 
-    fprintf  (stack_data->aboba, "stack capacity: %lu\n",          stack_data->capacity);
+    fprintf  (stack_data->aboba, "stack capacity: %lld\n",         stack_data->capacity);
     fprintf  (stack_data->aboba, "stack capacity address: %p\n", &(stack_data->capacity));
     put_stars(stack_data->aboba);   
 
-    for(size_t i = 0; i < stack_data->size; i++) //printing NON empty element
+    for(long long i = 0; i < stack_data->size; i++) //printing NON empty element
     {
-        fprintf(stack_data->aboba, "stack element non empty %lu: %c\n",           i, stack_data->stack_array[i]);
-        fprintf(stack_data->aboba, "stack element non empty %lu address: %p\n\n", i, &(stack_data->stack_array[i]));
+        fprintf(stack_data->aboba, "stack element non empty %lld: %c\n",           i, stack_data->stack_array[i]);
+        fprintf(stack_data->aboba, "stack element non empty %lld address: %p\n\n", i, &(stack_data->stack_array[i]));
     }
     
-    for(size_t i = stack_data->size; i < stack_data->capacity; i++)//printing empty element
+    for(long long i = stack_data->size; i < stack_data->capacity; i++)//printing empty element
     {
-        if(stack_data->size > stack_data->capacity)
-        {
-            fprintf(stderr, "PIZDEC %s:%d", __func__, __LINE__);
-            assert(0);
-        }
-        fprintf(stack_data->aboba, "stack element empty %lu: %c\n",           i,  stack_data->stack_array[i]);
-        fprintf(stack_data->aboba, "stack element empty %lu address: %p\n\n", i, &(stack_data->stack_array[i]));
+        fprintf(stack_data->aboba, "stack element empty %lld: %c\n",           i,  stack_data->stack_array[i]);
+        fprintf(stack_data->aboba, "stack element empty %lld address: %p\n\n", i, &(stack_data->stack_array[i]));
     }
     
 
@@ -156,51 +205,110 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
  
     fprintf(stack_data->aboba, "\n\n\n\n");
     //printf every address meaning etc
+    RETURN_ERROR(stack_is_err(stack_data));
 }
 
 
-// int stack_is_err()
-// {
-//     err checker
-// }
-
-
-Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int var) // FIXME add checker
+size_t stack_is_err(Main_Stack_Struct *stack_data)
 {
+    size_t errors_sum = 0;
+
+    if(!is_struct_addresses_okay(stack_data))
+    {                           //macros???
+        errors_sum += 1;
+    } 
+
+
+    if(stack_data->capacity <= 0)
+    {
+        errors_sum += 2;
+    }
+    
+
+    if(stack_data->size < 0)
+    {
+        errors_sum += 4;
+    }
+    
+
+    if(stack_data->size > stack_data->capacity)
+    {
+        errors_sum += 8;
+    }
+    
+
+    if(stack_data->aboba == nullptr)
+    {
+        errors_sum += 16;
+    }     
+
+    return errors_sum;
+}
+
+
+Error_Codes realloc_maker(Main_Stack_Struct *stack_data) // FIXME add checker
+{
+    RETURN_ERROR(stack_is_err(stack_data));
+
     if(!is_struct_addresses_okay(stack_data))
         return SMTH_WAS_BROKEN;
 
-    if(is_arr_incr_need(stack_data))
-        Error_Codes sigma = NEED_; 
+    Realloc_Codes sigma = INIT_CODE;
 
-    size_t new_capacity = stack_data->capacity;
+    if(is_arr_incr_need(*stack_data))
+        sigma = REAL_UP;
+  
+    if(is_arr_decr_need(*stack_data))
+        sigma = REAL_DOWN;
+
+    long long new_capacity = stack_data->capacity; 
     
-    if(var == 1)
+    switch(sigma)
     {
-        new_capacity *= 2;
+        case(REAL_UP):
+        {
+            new_capacity *= 2;
+            break;
+        }
+        case(REAL_DOWN):
+        {
+            new_capacity /= 4;
+            break;
+        }
+        case(INIT_CODE):
+        {
+            return SMTH_WAS_BROKEN;
+            break;
+        }
+        case(STRUCT_CTOR_SIZE):
+        {
+            return SMTH_WAS_BROKEN;
+            break;
+        }
+        default:
+        {
+            return SMTH_WAS_BROKEN;
+            break;
+        }
     }
-    else if(var == 2)
-    {
-        new_capacity /= 2;
-    }
 
 
-    StackElem_t *new_array = (StackElem_t*) realloc(stack_data->stack_array, new_capacity); // FIXME fix check
+    StackElem_t *new_array = (StackElem_t*) realloc(stack_data->extended_arr, (size_t)(new_capacity + 2 * canary_slide)); // FIXME fix check
 
-    if(var == 1)
-        memset(&new_array[stack_data->size], '\0', (new_capacity - stack_data->size) * sizeof(StackElem_t));
+    stack_data->capacity     = new_capacity;
+    stack_data->extended_arr = new_array;
 
 
-    if(stack_data->stack_array != nullptr)
-    {
-        stack_data->capacity = new_capacity;
-        stack_data->stack_array = new_array;
-    }
-    else
-    {
-        return SMTH_WAS_BROKEN; //TODO add spec error code
-    }
+    if(sigma == REAL_UP)
+        memset(&new_array[stack_data->size], '\0', (size_t)(new_capacity - stack_data->size + canary_slide) * sizeof(StackElem_t));
 
+    stack_data->stack_array = (stack_data->stack_array + canary_slide);
+
+    fprintf(stderr, "end of extended array %p\n\n", &stack_data->extended_arr[stack_data->capacity + 2 * canary_slide]);
+
+    put_canaries(stack_data);
+    
+    RETURN_ERROR(stack_is_err(stack_data));
     return ALL_IS_OK;
 }
 
@@ -217,6 +325,7 @@ void put_stars(FILE* file)
 
 int is_arr_incr_need(Main_Stack_Struct stack_data)
 {
+
     if(stack_data.capacity - stack_data.size <= 1)
         return 1;
     else
@@ -227,17 +336,90 @@ int is_arr_incr_need(Main_Stack_Struct stack_data)
 
 int is_arr_decr_need(Main_Stack_Struct stack_data)
 {
-    if(stack_data.size * 2 <= stack_data.capacity && stack_data.size >= 4)
+    if(stack_data.size * 4 <= stack_data.capacity && stack_data.size >= 4)
         return 1;
     else
         return 0;
+}
+
+
+Error_Codes return_error(size_t err_code, const char* file, const char* func, int line)
+{
+    if(err_code != 0)
+    {
+        fprintf(stderr, RED_TEXT("ERROR DETECTED IN ") MAGENTA_TEXT("%s:") BLUE_TEXT("%s:") GREEN_TEXT("%d\n")
+                        RED_TEXT("ERROR SUM = ") GREEN_TEXT("%lu\n"), file, func, line, err_code);
+
+        fprintf(stderr, MAGENTA_TEXT("\nERROR CODES:\n")
+                        YELLOW_TEXT("STRUCT_ADDRESS_IS_BAD     =  ")   RED_TEXT("1\n")
+                        YELLOW_TEXT("NEG_CAPACITY              =  ")   RED_TEXT("2\n")
+                        YELLOW_TEXT("NEG_SIZE                  =  ")   RED_TEXT("4\n")
+                        YELLOW_TEXT("SIZE_BIGGER_THAN_CAPACITY =  ")   RED_TEXT("8\n")
+                        YELLOW_TEXT("FILE_PTR_IS_ZERO          = ")   RED_TEXT("16\n\n"));
+
+        assert(0);
+    }
+    else
+    {
+        return ALL_IS_OK;
+    }
 }
 
 
 int is_struct_addresses_okay(Main_Stack_Struct *stack_data)
 {
+    
     if(stack_data && stack_data->stack_array)
         return 1;
     else
         return 0;
 }
+
+
+Error_Codes put_canaries(Main_Stack_Struct *stack_data)//FIXME ZALUPA PRI VTOROM ZAXODE (NU I HUYNU YA NAPISAL)
+{
+    //RETURN_ERROR(stack_is_err(stack_data));
+
+
+    *((long long*)stack_data->extended_arr) = canary_meaning;
+
+    fprintf(stderr, "\n\n\ncanary %lld\n", (long long)stack_data->extended_arr[0]);
+
+    fprintf(stderr, "last stack array elem addr %p\n", stack_data->stack_array + stack_data->capacity);
+
+    fprintf(stderr, "begin of extended arr %p\nbegin of stack array %p\n\n", stack_data->extended_arr, stack_data->stack_array);
+
+    fprintf(stderr, "capacity base %lld capacity counted %ld\n\n", stack_data->capacity, &stack_data->extended_arr[(size_t)stack_data->capacity + 2 * canary_slide] - stack_data->extended_arr);
+
+    fprintf(stderr, "end of stack array %p\nend of extended array %p\n\n", &stack_data->stack_array[stack_data->capacity], &stack_data->extended_arr[(size_t)stack_data->capacity + 2 * canary_slide]);
+    //TODO add right canary
+
+    *((long long*)(stack_data->extended_arr + canary_slide + stack_data->capacity)) = canary_meaning;
+
+    RETURN_ERROR(stack_is_err(stack_data));
+    return ALL_IS_OK;
+}
+
+
+
+
+//TODO canary_t (d_type) cond compile I WAS RIGHT ABOUT CANARIES 
+//TODO make poison instead of '\0' check 'free' poison all in debug
+//TODO push && pop - above 2 strings on release
+//TODO get data_type from console  
+//TODO poison before canaries (?)
+//TODO check poison by address && meaning(?) (all stack)
+//TODO memcpy???????
+//TODO hash through control sum than real hash (non cryptographic) (hash = hash * 33 xor(current byte)) 
+//TODO  
+//TODO  
+//TODO   
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
