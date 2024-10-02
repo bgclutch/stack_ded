@@ -10,8 +10,8 @@ int main(void)
 {
     struct Main_Stack_Struct stack_data = {};
 
-    stack_data.aboba = fopen("stack_output.txt", "w"); // FIXME check
-    assert(stack_data.aboba);
+    stack_data.dump_file = fopen("stack_output.txt", "w"); // FIXME check
+    assert(stack_data.dump_file);
 
     StackElem_t elem = 0;
 
@@ -32,7 +32,7 @@ int main(void)
 
     dtor_stack(&stack_data);
 
-    if(fclose(stack_data.aboba) != 0)
+    if(fclose(stack_data.dump_file) != 0)
         printf("ty eblan?\n");
 
     return 0;

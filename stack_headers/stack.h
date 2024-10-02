@@ -29,7 +29,7 @@ struct Main_Stack_Struct
     StackElem_t*  stack_array;  
     long                 size;
     long             capacity;
-    FILE*               aboba;
+    FILE*           dump_file;
     long      right_st_canary;
 };
 
