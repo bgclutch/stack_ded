@@ -11,13 +11,13 @@ typedef char StackElem_t;
 
 enum Error_Codes 
 {
-    SMTH_WAS_BROKEN           =   0,
-    STRUCT_ADDRESS_IS_BAD     =   1,
-    NEG_CAPACITY              =   2,
-    NEG_SIZE                  =   4,
-    SIZE_BIGGER_THAN_CAPACITY =   8,
-    FILE_PTR_IS_ZERO          =  16,
-    ALL_IS_OK                 = 100,
+    ALL_IS_OK                 = 0x00,
+    SMTH_WAS_BROKEN           = 0x01,
+    STRUCT_ADDRESS_IS_BAD     = 0x02,
+    NEG_CAPACITY              = 0x04,
+    NEG_SIZE                  = 0x08,
+    SIZE_BIGGER_THAN_CAPACITY = 0x0F,
+    FILE_PTR_IS_ZERO          = 0x10,
     //ADD SOME ERRORS CODES
     //realloc error (na podumat')
 };
@@ -33,13 +33,13 @@ enum Realloc_Codes
 
 struct Main_Stack_Struct
 { 
-    long long  left_st_canary;
+    long       left_st_canary;
     StackElem_t*  stack_array;  
     StackElem_t* extended_arr;
-    long long            size;
-    long long        capacity;
+    long                 size;
+    long             capacity;
     FILE*               aboba;
-    long long right_st_canary;
+    long      right_st_canary;
     
 };
 
