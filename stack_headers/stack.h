@@ -22,29 +22,19 @@ enum Error_Codes
     //realloc error (na podumat')
 };
 
-enum Realloc_Codes
-{
-    REAL_UP          =   1,
-    REAL_DOWN        =   2,
-    STRUCT_CTOR_SIZE =   4,
-    INIT_CODE        = -10
-};
-
-
 struct Main_Stack_Struct
 { 
     long       left_st_canary;
-    StackElem_t*  stack_array;  
     StackElem_t* extended_arr;
+    StackElem_t*  stack_array;  
     long                 size;
     long             capacity;
     FILE*               aboba;
     long      right_st_canary;
-    
 };
 
 
-Error_Codes ctor_stack(Main_Stack_Struct *stack_data, size_t size);
+Error_Codes ctor_stack(Main_Stack_Struct *stack_data);
 Error_Codes dtor_stack(Main_Stack_Struct *stack_data);
 
 
@@ -55,10 +45,10 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem);
 void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const char* func_name, size_t line);
 
 
-int is_arr_incr_need(Main_Stack_Struct stack_data);
+int realloc_if_up_needed(Main_Stack_Struct stack_data);
 
 
-int is_arr_decr_need(Main_Stack_Struct stack_data);
+int realloc_if_down_needed(Main_Stack_Struct stack_data);
 
 
 int is_struct_addresses_okay(Main_Stack_Struct *stack_data);
@@ -70,7 +60,7 @@ size_t stack_is_err(Main_Stack_Struct *stack_data);
 void put_stars(FILE* file);
 
 
-Error_Codes realloc_maker(Main_Stack_Struct *stack_data);
+Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef);
 
 
 Error_Codes return_error(size_t err_code, const char* file, const char* func, int line);
