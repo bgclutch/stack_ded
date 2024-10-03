@@ -45,7 +45,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 
     TEMP_VAR(Error_Codes put_canaries_code = ) put_canaries(stack_data);
 
-    REVERSE_ASSERT(put_canaries_code && "put canaries error") TEMP_VAR(;) 
+    ASSERT(!put_canaries_code && "put canaries error") TEMP_VAR(;) 
 
     stack_data->hash_struct = hash_sum(*stack_data);
     TEMP_VAR(size_t my_hash = hash_sum(*stack_data));
@@ -69,7 +69,7 @@ Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
 
     free(stack_data->stack_array); 
     stack_data->stack_array = nullptr;
-    REVERSE_ASSERT(stack_data->stack_array && "stack array != nullptr") TEMP_VAR(;) 
+    ASSERT(!stack_data->stack_array && "stack array != nullptr") TEMP_VAR(;) 
 
     return ALL_IS_OK;
 }
@@ -86,7 +86,7 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     TEMP_VAR(Error_Codes realloc_code =) realloc_maker(stack_data, realloc_if_up_needed(*stack_data));
 
-    REVERSE_ASSERT(realloc_code && "realloc error") TEMP_VAR(;)  // FIXME check errors
+    ASSERT(!realloc_code && "realloc error") TEMP_VAR(;)  // FIXME check errors
 
     stack_data->stack_array[canary_offset + stack_data->size++] = elem;
 
@@ -135,7 +135,7 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
     stack_data->hash_struct = hash_sum(*stack_data);
 
     TEMP_VAR(Error_Codes realloc_code =) realloc_maker(stack_data, realloc_if_up_needed(*stack_data));
-    REVERSE_ASSERT(realloc_code && "realloc error") TEMP_VAR(;) 
+    ASSERT(!realloc_code && "realloc error") TEMP_VAR(;) 
 
     stack_data->hash_struct = hash_sum(*stack_data);
     TEMP_VAR(my_hash = hash_sum(*stack_data);) 
@@ -261,7 +261,7 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef) // FIXM
     stack_data->hash_struct = hash_sum(*stack_data);
 
     TEMP_VAR(Error_Codes put_canaries_code = ) put_canaries(stack_data);
-    REVERSE_ASSERT(put_canaries_code && "put canaries error") TEMP_VAR(;) 
+    ASSERT(!put_canaries_code && "put canaries error") TEMP_VAR(;) 
     
     stack_data->hash_struct = hash_sum(*stack_data);
     TEMP_VAR(my_hash = hash_sum(*stack_data);) 

@@ -2,16 +2,14 @@
 #define STACK_H_
 
 
-//#define DEBUG
+#define DEBUG
 
 #ifdef DEBUG 
     #define TEMP_VAR(...) __VA_ARGS__
-    #define REVERSE_ASSERT(...) assert(!__VA_ARGS__)
     #define ASSERT(...) assert(__VA_ARGS__)
     #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
 #else
-    #define TEMP_VAR(...) 
-    #define REVERSE_ASSERT(...) 
+    #define TEMP_VAR(...)  
     #define ASSERT(...) 
     #define RETURN_ERROR(...) 
 #endif
