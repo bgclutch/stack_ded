@@ -9,11 +9,11 @@
 
 
 //#define BREAK_MODE
-#define STACK_DUMP(stack_data) stack_dump(stack_data, __FILE__, __func__, __LINE__) 
+#define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__) 
 #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
 
 
-const uint64_t canary_value  = 0x71EBCEE; //dumayte                         //FIXME long long to long
+const uint64_t canary_value  = 0x71EBCEE; //dumayte // FIXME long long to long
 const size_t canary_offset = sizeof(long) / sizeof(StackElem_t);
 const size_t Struct_Ctor_Size =    4;
 StackElem_t My_Empty_Element  = '\0';
@@ -28,7 +28,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
                                              2 * canary_offset, sizeof(char));
 
     if(stack_data->stack_array == nullptr) //hueta check
-        return SMTH_WAS_BROKEN;      // TODO make 1 pointer instead of 2
+        return STACK_ARRAY_ADDRESS_IS_BAD; // TODO make 1 pointer instead of 2
     
     stack_data->capacity = Struct_Ctor_Size;
     stack_data->size     = 0;
@@ -43,7 +43,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 
     stack_data->hash_struct = hash_sum(*stack_data);
 
-    put_canaries(stack_data);
+    assert(!put_canaries(stack_data));
 
     stack_data->hash_struct = hash_sum(*stack_data);
     size_t my_hash = hash_sum(*stack_data);
@@ -61,7 +61,7 @@ Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
     STACK_DUMP(stack_data);
 
     if(!is_struct_addresses_okay(stack_data)) //address and meanings
-        return SMTH_WAS_BROKEN;
+        return STACK_ARRAY_ADDRESS_IS_BAD;
 
     memset(stack_data->stack_array + canary_offset, My_Empty_Element, stack_data->capacity); // FIXME memset is only for bytes
 
@@ -81,7 +81,7 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     stack_data->hash_struct = hash_sum(*stack_data);
 
-    realloc_maker(stack_data, realloc_if_up_needed(*stack_data)); // FIXME check errors
+    assert(!realloc_maker(stack_data, realloc_if_up_needed(*stack_data))); // FIXME check errors
 
     stack_data->stack_array[canary_offset + stack_data->size++] = elem;
 
@@ -117,7 +117,7 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
     
     if(stack_data->size == 0)
     {
-        return SMTH_WAS_BROKEN;
+        return EMPTY_STACK;
     }
 
     *elem = stack_data->stack_array[canary_offset + (--stack_data->size)]; 
@@ -129,7 +129,7 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 
     stack_data->hash_struct = hash_sum(*stack_data);
 
-    realloc_maker(stack_data, realloc_if_down_needed(*stack_data)); // FIXME check error
+    assert(!realloc_maker(stack_data, realloc_if_down_needed(*stack_data))); // FIXME check error
 
     stack_data->hash_struct = hash_sum(*stack_data);
     my_hash = hash_sum(*stack_data);
@@ -154,10 +154,6 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     fprintf(stack_data->dump_file, "left struct canary address: %p\n", &stack_data->left_st_canary);
     put_stars(stack_data->dump_file);
 
-    fprintf  (stack_data->dump_file, "stack address begin: %p\n",       stack_data->stack_array);
-    fprintf  (stack_data->dump_file, "stack address end: %p\n",        &stack_data->stack_array[stack_data->capacity]);
-    put_stars(stack_data->dump_file);
- 
     fprintf  (stack_data->dump_file, "stack size: %zu\n",                stack_data->size);
     fprintf  (stack_data->dump_file, "stack size address: %p\n",       &(stack_data->size));
     put_stars(stack_data->dump_file);   
@@ -165,6 +161,10 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     fprintf  (stack_data->dump_file, "stack capacity: %zu\n",            stack_data->capacity);
     fprintf  (stack_data->dump_file, "stack capacity address: %p\n",   &(stack_data->capacity));
     put_stars(stack_data->dump_file);   
+
+    fprintf  (stack_data->dump_file, "stack address begin: %p\n",       stack_data->stack_array);
+    fprintf  (stack_data->dump_file, "stack address end: %p\n",        &stack_data->stack_array[stack_data->capacity]);
+    put_stars(stack_data->dump_file);
 
     fprintf(stack_data->dump_file, "left arr canary: 0x%0lx\n",   *(uint64_t*)(stack_data->stack_array));
     fprintf(stack_data->dump_file, "left arr canary address: %p\n\n",      stack_data->stack_array);
@@ -193,9 +193,6 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     fprintf(stack_data->dump_file, "right struct canary: 0x%0lx\n",       stack_data->right_st_canary);
     fprintf(stack_data->dump_file, "right struct canary address: %p\n", &stack_data->right_st_canary);
     put_stars(stack_data->dump_file);
-
-
-    // TODO print empty elements
     put_stars(stack_data->dump_file);          
      
  
@@ -231,19 +228,18 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef) // FIXM
 
     if(scale_coef <= 0) //???
     {
-        return SMTH_WAS_BROKEN; 
+        return ALL_IS_OK; 
     }
 
     size_t new_capacity = 0;
 
-
-    if(scale_coef == REAL_UP)
+    if(scale_coef == 2)
     {
-        new_capacity = stack_data->capacity * REAL_UP;
+        new_capacity = stack_data->capacity * scale_coef;
     }
-    else
+    else if (scale_coef == 4)
     {
-        new_capacity = stack_data->capacity / REAL_DOWN;
+        new_capacity = stack_data->capacity / scale_coef;
     }
 
 
@@ -253,12 +249,12 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef) // FIXM
     stack_data->stack_array   = new_array;
 
 
-    if(scale_coef == REAL_UP)
+    if(scale_coef == 2)
         memset((new_array + stack_data->size + canary_offset), My_Empty_Element, (stack_data->capacity - stack_data->size) * sizeof(StackElem_t));
 
     stack_data->hash_struct = hash_sum(*stack_data);
 
-    put_canaries(stack_data);
+    assert(!put_canaries(stack_data));
     
     stack_data->hash_struct = hash_sum(*stack_data);
     my_hash = hash_sum(*stack_data);
@@ -282,7 +278,7 @@ int realloc_if_up_needed(Main_Stack_Struct stack_data)
 {
 
     if(stack_data.capacity - stack_data.size <= 1)
-        return REAL_UP;
+        return 2;
     else
         return 0;
 
@@ -292,7 +288,7 @@ int realloc_if_up_needed(Main_Stack_Struct stack_data)
 int realloc_if_down_needed(Main_Stack_Struct stack_data)
 {
     if(4 <= stack_data.size && stack_data.size * 4 <= stack_data.capacity)
-        return REAL_DOWN;
+        return 4;
     else
         return 0;
 }

@@ -12,21 +12,16 @@ typedef char StackElem_t;
 
 enum Error_Codes 
 {
-    ALL_IS_OK                 = 0x00,
-    SMTH_WAS_BROKEN           = 0x01,
-    STRUCT_ADDRESS_IS_BAD     = 0x02,
-    NEG_CAPACITY              = 0x04,
-    WRONG_HASH                = 0x08,
-    SIZE_BIGGER_THAN_CAPACITY = 0x0F,
-    FILE_PTR_IS_ZERO          = 0x10,
+    ALL_IS_OK                  = 0x00,
+    SMTH_WAS_BROKEN            = 0x01,
+    STACK_ARRAY_ADDRESS_IS_BAD = 0x02,
+    NEG_CAPACITY               = 0x04,
+    WRONG_HASH                 = 0x08,
+    STACK_OVERFLOW             = 0x0F,
+    FILE_PTR_IS_ZERO           = 0x10,
+    EMPTY_STACK                = 0x18,                                                                                                  
     //ADD SOME ERRORS CODES
     //realloc error (na podumat')
-};
-
-enum Realloc_Codes
-{
-    REAL_UP   = 2,
-    REAL_DOWN = 4
 };
 
 struct Main_Stack_Struct

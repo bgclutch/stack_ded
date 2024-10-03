@@ -11,11 +11,11 @@ int main(void)
     Main_Stack_Struct stack_data = {};
 
     stack_data.dump_file = fopen("stack_output.txt", "w"); // FIXME check
-    assert(stack_data.dump_file);
+    assert(stack_data.dump_file && "dump file open error");
 
     StackElem_t elem = 0;
 
-    char test[] = {'a', '1', '^', 'k', '!', '@', '4', '/', 'j', '4', 'o'};
+    char test[] = {'a', '1', '^', 'k', '!', '@', '4', '/', 'j', '4', 'o', 'p', '3', 'N', 'i', '5'};
     
     Error_Codes ctor_result = ctor_stack(&stack_data); // FIXME check return value
     assert(!ctor_result && "stack constructor error");
@@ -28,10 +28,10 @@ int main(void)
         assert(!push_result && "push result error");
     }
 
-    Error_Codes pop_result = ALL_IS_OK;
+
     for(size_t i = stack_data.size; i >= 1; i--)
     {
-        pop_result = stack_pop(&stack_data, &elem);
+        Error_Codes pop_result = stack_pop(&stack_data, &elem);
         assert(!pop_result && "pop result error");
     }
 
