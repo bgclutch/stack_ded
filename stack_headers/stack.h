@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdint.h>
 
 typedef void void_sex;
 typedef char StackElem_t;
@@ -24,13 +25,13 @@ enum Error_Codes
 
 struct Main_Stack_Struct
 { 
-    long       left_st_canary;
-    StackElem_t* extended_arr;
+    uint64_t   left_st_canary;
     StackElem_t*  stack_array;  
-    long                 size;
-    long             capacity;
+    size_t               size;
+    size_t           capacity;
     FILE*           dump_file;
-    long      right_st_canary;
+    uint64_t         hash_sum;
+    uint64_t  right_st_canary;
 };
 
 

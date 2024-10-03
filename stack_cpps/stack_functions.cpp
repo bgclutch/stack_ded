@@ -13,9 +13,9 @@
 #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
 
 
-const long canary_value  = 0x71EBCEE; //dumayte                         //FIXME long long to long
-const long canary_offset = sizeof(long) / sizeof(StackElem_t);
-const size_t Struct_Ctor_Size = 8;
+const uint64_t canary_value  = 0x71EBCEE; //dumayte                         //FIXME long long to long
+const size_t canary_offset = sizeof(long) / sizeof(StackElem_t);
+const size_t Struct_Ctor_Size =    8;
 StackElem_t My_Empty_Element  = '\0';
 
 
@@ -24,16 +24,11 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 {
     assert(stack_data && "stack data address is NULL");         // FIXME assert or make disableable
 
-    stack_data->extended_arr = (char*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) +
+    stack_data->stack_array = (char*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) +
                                              2 * canary_offset, sizeof(char));
 
-    //fprintf(stderr, "extended arr address:%p\n\n", stack_data->extended_arr);
-
-    if(stack_data->extended_arr == nullptr) //hueta check
-        return SMTH_WAS_BROKEN;  
-
- 
-    stack_data->stack_array = (stack_data->extended_arr + canary_offset); // TODO make 1 pointer instead of 2
+    if(stack_data->stack_array == nullptr) //hueta check
+        return SMTH_WAS_BROKEN;      // TODO make 1 pointer instead of 2
     
     stack_data->capacity = Struct_Ctor_Size;
     stack_data->size     = 0;
@@ -43,7 +38,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
     stack_data->right_st_canary = canary_value;
 
 
-    for(long i = 0; i < stack_data->capacity; i++)
+    for(size_t i = canary_offset; i < stack_data->capacity; i++)
         stack_data->stack_array[i] = My_Empty_Element;
 
     put_canaries(stack_data);
@@ -58,18 +53,13 @@ Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
     RETURN_ERROR(stack_is_err(stack_data));
     STACK_DUMP(stack_data);
 
-    if(!is_struct_addresses_okay(stack_data))//address and meanings
+    if(!is_struct_addresses_okay(stack_data)) //address and meanings
         return SMTH_WAS_BROKEN;
 
-    memset(stack_data->stack_array, My_Empty_Element, (size_t)stack_data->size); // FIXME memset is only for bytes
+    memset(stack_data->stack_array + canary_offset, My_Empty_Element, stack_data->capacity); // FIXME memset is only for bytes
 
-    stack_data->size            = 0;
-    stack_data->capacity        = 0;
-    stack_data->left_st_canary  = 0;
-    stack_data->right_st_canary = 0;
-
-    free(stack_data->extended_arr); 
-    stack_data->extended_arr = nullptr;
+    free(stack_data->stack_array); 
+    stack_data->stack_array = nullptr;
 
     return ALL_IS_OK;
 }
@@ -82,7 +72,8 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     realloc_maker(stack_data, realloc_if_up_needed(*stack_data)); // FIXME check errors
 
-    stack_data->stack_array[stack_data->size++] = elem;
+    stack_data->stack_array[canary_offset + stack_data->size++] = elem;
+
 
     #ifdef BREAK_MODE
     {
@@ -113,12 +104,12 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
         return SMTH_WAS_BROKEN;
     }
 
-    *elem = stack_data->stack_array[--stack_data->size]; 
+    *elem = stack_data->stack_array[canary_offset + (--stack_data->size)]; 
 
     put_stars(stack_data->dump_file);
     fprintf(stack_data->dump_file, "popped elem %c\n", *elem);
 
-    stack_data->stack_array[stack_data->size] = My_Empty_Element;  
+    stack_data->stack_array[canary_offset + stack_data->size] = My_Empty_Element;  
 
     realloc_maker(stack_data, realloc_if_down_needed(*stack_data)); // FIXME check error
 
@@ -136,7 +127,7 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     fprintf  (stack_data->dump_file, "%s %s:%lu\n", file_name, func_name, line);
     put_stars(stack_data->dump_file);
     
-    fprintf(stack_data->dump_file, "left struct canary: 0x%0x\n",         stack_data->left_st_canary);
+    fprintf(stack_data->dump_file, "left struct canary: 0x%0lx\n",      stack_data->left_st_canary);
     fprintf(stack_data->dump_file, "left struct canary address: %p\n", &stack_data->left_st_canary);
     put_stars(stack_data->dump_file);
 
@@ -144,34 +135,34 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     fprintf  (stack_data->dump_file, "stack address end: %p\n",        &stack_data->stack_array[stack_data->capacity]);
     put_stars(stack_data->dump_file);
  
-    fprintf  (stack_data->dump_file, "stack size: %ld\n",                stack_data->size);
+    fprintf  (stack_data->dump_file, "stack size: %zu\n",                stack_data->size);
     fprintf  (stack_data->dump_file, "stack size address: %p\n",       &(stack_data->size));
     put_stars(stack_data->dump_file);   
   
-    fprintf  (stack_data->dump_file, "stack capacity: %ld\n",            stack_data->capacity);
+    fprintf  (stack_data->dump_file, "stack capacity: %zu\n",            stack_data->capacity);
     fprintf  (stack_data->dump_file, "stack capacity address: %p\n",   &(stack_data->capacity));
     put_stars(stack_data->dump_file);   
 
-    fprintf(stack_data->dump_file, "left arr canary: 0x%0x\n",   *(long*)(stack_data->extended_arr));
-    fprintf(stack_data->dump_file, "left arr canary address: %p\n\n",   stack_data->extended_arr);
+    fprintf(stack_data->dump_file, "left arr canary: 0x%0lx\n",   *(uint64_t*)(stack_data->stack_array));
+    fprintf(stack_data->dump_file, "left arr canary address: %p\n\n",      stack_data->stack_array);
 
-    for(long i = 0; i < stack_data->size; i++) //printing NON empty element
+    for(size_t i = 0; i < stack_data->size; i++) // printing NON empty element
     {
-        fprintf(stack_data->dump_file, "stack element non empty %ld: %c\n",           i,   stack_data->stack_array[i]);
-        fprintf(stack_data->dump_file, "stack element non empty %ld address: %p\n\n", i, &(stack_data->stack_array[i]));
+        fprintf(stack_data->dump_file, "stack element non empty %zu: %c\n",           i,   stack_data->stack_array[i + canary_offset]);
+        fprintf(stack_data->dump_file, "stack element non empty %zu address: %p\n\n", i, &(stack_data->stack_array[i + canary_offset]));
     }
     
-    for(long i = stack_data->size; i < stack_data->capacity; i++)//printing empty element
+    for(size_t i = stack_data->size; i < stack_data->capacity; i++) // printing empty element
     {
-        fprintf(stack_data->dump_file, "stack element empty %ld: %c\n",           i,       stack_data->stack_array[i]);
-        fprintf(stack_data->dump_file, "stack element empty %ld address: %p\n\n", i,     &(stack_data->stack_array[i]));
+        fprintf(stack_data->dump_file, "stack element empty %zu: %c\n",           i,       stack_data->stack_array[i + canary_offset]);
+        fprintf(stack_data->dump_file, "stack element empty %zu address: %p\n\n", i,     &(stack_data->stack_array[i + canary_offset]));
     }
 
-    fprintf(stack_data->dump_file, "right arr canary: 0x%0x\n", *(long*)(stack_data->extended_arr + canary_offset + stack_data->capacity));
-    fprintf(stack_data->dump_file, "right arr canary address: %p\n",   stack_data->extended_arr + canary_offset + stack_data->capacity);
+    fprintf(stack_data->dump_file, "right arr canary: 0x%0lx\n", *(uint64_t*)(stack_data->stack_array + canary_offset + stack_data->capacity));
+    fprintf(stack_data->dump_file, "right arr canary address: %p\n",     stack_data->stack_array + canary_offset + stack_data->capacity);
     put_stars(stack_data->dump_file);
     
-    fprintf(stack_data->dump_file, "right struct canary: 0x%0x\n", stack_data->right_st_canary);
+    fprintf(stack_data->dump_file, "right struct canary: 0x%0lx\n",       stack_data->right_st_canary);
     fprintf(stack_data->dump_file, "right struct canary address: %p\n", &stack_data->right_st_canary);
     put_stars(stack_data->dump_file);
 
@@ -192,7 +183,7 @@ size_t stack_is_err(Main_Stack_Struct *stack_data) // FIXME CHANGE ZALUPA
 
     if(!is_struct_addresses_okay(stack_data))   errors_sum += 0x02;
     if(stack_data->capacity <= 0)               errors_sum += 0x04;
-    if(stack_data->size < 0)                    errors_sum += 0x08;
+    if(stack_data->size < 0)                   errors_sum += 0x08;
     if(stack_data->size > stack_data->capacity) errors_sum += 0x0F;
     if(stack_data->dump_file == nullptr)        errors_sum += 0x10;
 
@@ -209,7 +200,7 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef) // FIXM
         return SMTH_WAS_BROKEN; 
     }
 
-    long new_capacity = 0;
+    size_t new_capacity = 0;
 
 
     if(scale_coef == 2)
@@ -222,19 +213,14 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef) // FIXM
     }
 
 
-    StackElem_t *new_array = (StackElem_t*) realloc(stack_data->extended_arr, (size_t)(new_capacity + 2 * canary_offset)); // FIXME fix check
+    StackElem_t *new_array = (StackElem_t*) realloc(stack_data->stack_array, (new_capacity + 2 * canary_offset)); // FIXME fix check
 
     stack_data->capacity      = new_capacity;
-    stack_data->extended_arr  = new_array;
+    stack_data->stack_array   = new_array;
 
 
     if(scale_coef == 2)
-        memset(&new_array[stack_data->size + canary_offset], My_Empty_Element, (size_t)(new_capacity - stack_data->size + canary_offset) * sizeof(StackElem_t));
-
-    stack_data->stack_array = (stack_data->stack_array + canary_offset);
-
-
-    stack_data->stack_array = stack_data->extended_arr + canary_offset;
+        memset((new_array + stack_data->size + canary_offset), My_Empty_Element, (stack_data->capacity - stack_data->size) * sizeof(StackElem_t));
 
     put_canaries(stack_data);
     
@@ -309,14 +295,9 @@ Error_Codes put_canaries(Main_Stack_Struct *stack_data)
 {
     //RETURN_ERROR(stack_is_err(stack_data));
 
-    *((long*)stack_data->extended_arr) = canary_value;
+    *((uint64_t*)stack_data->stack_array) = canary_value;
 
-    *((long*)(stack_data->extended_arr + canary_offset + stack_data->capacity)) = canary_value;
-
-    // fprintf(stderr, "left canary address %p && value 0x%ldX\n"
-    //                 "right canary address %p && value 0x%ldX\n"
-    //                 "stack array begin address %p && stack array end address %p\n\n", (stack_data->stack_array - canary_offset),
-    //                  *(long*)(stack_data->stack_array + stack_data->capacity), stack_data->stack_array, *(long*)(stack_data->stack_array + stack_data->capacity));
+    *((uint64_t*)(stack_data->stack_array + canary_offset + stack_data->capacity)) = canary_value;
 
     RETURN_ERROR(stack_is_err(stack_data));
     return ALL_IS_OK;
