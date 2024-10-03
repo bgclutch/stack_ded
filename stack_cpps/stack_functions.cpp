@@ -22,7 +22,7 @@ StackElem_t My_Empty_Element  = '\0';
 
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 {
-    ASSERT(stack_data && "stack data address is NULL";)         // FIXME assert or make disableable
+    ASSERT(stack_data && "stack data address is NULL") TEMP_VAR(;)      // FIXME assert or make disableable
 
     stack_data->stack_array = (char*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) +
                                              2 * canary_offset, sizeof(char));
@@ -45,21 +45,21 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 
     TEMP_VAR(Error_Codes put_canaries_code = ) put_canaries(stack_data);
 
-    REVERSE_ASSERT(put_canaries_code && "put canaries error";)
+    REVERSE_ASSERT(put_canaries_code && "put canaries error") TEMP_VAR(;) 
 
     stack_data->hash_struct = hash_sum(*stack_data);
     TEMP_VAR(size_t my_hash = hash_sum(*stack_data));
     
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
     STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
 
 Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
 {
-    TEMP_VAR(size_t my_hash = hash_sum(*stack_data));
+    TEMP_VAR(size_t my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
     STACK_DUMP(stack_data);
 
     if(!is_struct_addresses_okay(stack_data)) //address and meanings
@@ -69,7 +69,7 @@ Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
 
     free(stack_data->stack_array); 
     stack_data->stack_array = nullptr;
-    REVERSE_ASSERT(stack_data->stack_array && "stack array != nullptr";)
+    REVERSE_ASSERT(stack_data->stack_array && "stack array != nullptr") TEMP_VAR(;) 
 
     return ALL_IS_OK;
 }
@@ -77,16 +77,16 @@ Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
 
 Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 {
-    TEMP_VAR(size_t my_hash = hash_sum(*stack_data));
+    TEMP_VAR(size_t my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
     //STACK_DUMP(stack_data);
 
     stack_data->hash_struct = hash_sum(*stack_data);
 
     TEMP_VAR(Error_Codes realloc_code =) realloc_maker(stack_data, realloc_if_up_needed(*stack_data));
 
-    REVERSE_ASSERT(realloc_code && "realloc error";) // FIXME check errors
+    REVERSE_ASSERT(realloc_code && "realloc error") TEMP_VAR(;)  // FIXME check errors
 
     stack_data->stack_array[canary_offset + stack_data->size++] = elem;
 
@@ -106,7 +106,7 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
     stack_data->hash_struct = hash_sum(*stack_data);
     TEMP_VAR(my_hash = hash_sum(*stack_data));
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;)
     STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
@@ -114,10 +114,10 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 //FIXME error checking
 Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 {
-    ASSERT(elem;)
-    TEMP_VAR(size_t my_hash = hash_sum(*stack_data);)
+    ASSERT(elem) TEMP_VAR(;) 
+    TEMP_VAR(size_t my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
     //STACK_DUMP(stack_data); 
     
     if(stack_data->size == 0)
@@ -135,12 +135,12 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
     stack_data->hash_struct = hash_sum(*stack_data);
 
     TEMP_VAR(Error_Codes realloc_code =) realloc_maker(stack_data, realloc_if_up_needed(*stack_data));
-    REVERSE_ASSERT(realloc_code && "realloc error";)
+    REVERSE_ASSERT(realloc_code && "realloc error") TEMP_VAR(;) 
 
     stack_data->hash_struct = hash_sum(*stack_data);
-    TEMP_VAR(my_hash = hash_sum(*stack_data));
+    TEMP_VAR(my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
     STACK_DUMP(stack_data); // TODO use macros
     return ALL_IS_OK;
 }
@@ -148,9 +148,9 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 
 void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const char* func_name, size_t line) //add checks
 {
-    TEMP_VAR(size_t my_hash = hash_sum(*stack_data));
+    TEMP_VAR(size_t my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
 
     put_stars(stack_data->dump_file);
     fprintf  (stack_data->dump_file, "%s %s:%lu\n", file_name, func_name, line);
@@ -206,9 +206,9 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     //printf every address meaning etc
 
     stack_data->hash_struct = hash_sum(*stack_data);
-    TEMP_VAR(my_hash = hash_sum(*stack_data));
+    TEMP_VAR(my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;)
 }
 
 
@@ -228,9 +228,9 @@ size_t stack_is_err(Main_Stack_Struct *stack_data, size_t hash) // FIXME CHANGE 
 
 Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef) // FIXME add checker
 {
-    TEMP_VAR(size_t my_hash = hash_sum(*stack_data));
+    TEMP_VAR(size_t my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;)
 
     if(scale_coef <= 0) //???
     {
@@ -261,12 +261,12 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef) // FIXM
     stack_data->hash_struct = hash_sum(*stack_data);
 
     TEMP_VAR(Error_Codes put_canaries_code = ) put_canaries(stack_data);
-    REVERSE_ASSERT(put_canaries_code && "put canaries error";)
+    REVERSE_ASSERT(put_canaries_code && "put canaries error") TEMP_VAR(;) 
     
     stack_data->hash_struct = hash_sum(*stack_data);
-    TEMP_VAR(my_hash = hash_sum(*stack_data));
+    TEMP_VAR(my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
     return ALL_IS_OK;
 }
 
@@ -314,7 +314,7 @@ Error_Codes return_error(size_t err_code, const char* file, const char* func, in
                         YELLOW_TEXT("SIZE_BIGGER_THAN_CAPACITY = ")   RED_TEXT("16\n")
                         YELLOW_TEXT("FILE_PTR_IS_ZERO          = ")   RED_TEXT("32\n\n"));
 
-        ASSERT(0;) // FIXME
+        ASSERT(0) TEMP_VAR(;)  // FIXME
         return ALL_IS_OK;
     }
     else
@@ -335,9 +335,9 @@ int is_struct_addresses_okay(Main_Stack_Struct *stack_data)
 
 Error_Codes put_canaries(Main_Stack_Struct *stack_data)
 {
-    TEMP_VAR(size_t my_hash = hash_sum(*stack_data));
+    TEMP_VAR(size_t my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;)
 
     *((uint64_t*)stack_data->stack_array) = canary_value;
 
@@ -345,9 +345,9 @@ Error_Codes put_canaries(Main_Stack_Struct *stack_data)
 
 
     stack_data->hash_struct = hash_sum(*stack_data);
-    TEMP_VAR(my_hash = hash_sum(*stack_data));
+    TEMP_VAR(my_hash = hash_sum(*stack_data);) 
 
-    RETURN_ERROR(stack_is_err(stack_data, my_hash));
+    RETURN_ERROR(stack_is_err(stack_data, my_hash)) TEMP_VAR(;) 
     return ALL_IS_OK;
 }
 

@@ -4,7 +4,7 @@
 
 //#define DEBUG
 
-#ifdef DEBUG
+#ifdef DEBUG 
     #define TEMP_VAR(...) __VA_ARGS__
     #define REVERSE_ASSERT(...) assert(!__VA_ARGS__)
     #define ASSERT(...) assert(__VA_ARGS__)
