@@ -5,14 +5,18 @@
 #define DEBUG
 
 #ifdef DEBUG 
-    #define TEMP_VAR(...) __VA_ARGS__
+    #define DEBUG_VAR(...) __VA_ARGS__
     #define ASSERT(...) assert(__VA_ARGS__)
     #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
 #else
-    #define TEMP_VAR(...)  
+    #define DEBUG_VAR(...)  
     #define ASSERT(...) 
     #define RETURN_ERROR(...) 
 #endif
+
+#define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__) 
+//#define BREAK_MODE
+
 
 
 #include <stdio.h>
@@ -21,6 +25,7 @@
 
 typedef void void_sex;
 typedef char StackElem_t;
+
 
 // FIXME make typedef StackElem_t
 
@@ -33,7 +38,8 @@ enum Error_Codes
     WRONG_HASH                 = 0x08,
     STACK_OVERFLOW             = 0x0F,
     FILE_PTR_IS_ZERO           = 0x10,
-    EMPTY_STACK                = 0x18,                                                                                                  
+    EMPTY_STACK                = 0x20,
+    STACK_NOT_REALLOCED        = 0x72,                                                                                                  
     //ADD SOME ERRORS CODES
     //realloc error (na podumat')
 };
@@ -61,10 +67,10 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem);
 void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const char* func_name, size_t line);
 
 
-int realloc_if_up_needed(Main_Stack_Struct stack_data);
+size_t realloc_if_up_needed(Main_Stack_Struct stack_data);
 
 
-int realloc_if_down_needed(Main_Stack_Struct stack_data);
+size_t realloc_if_down_needed(Main_Stack_Struct stack_data);
 
 
 int is_struct_addresses_okay(Main_Stack_Struct *stack_data);
@@ -76,7 +82,7 @@ size_t stack_is_err(Main_Stack_Struct *stack_data, size_t hash);
 void put_stars(FILE* file);
 
 
-Error_Codes realloc_maker(Main_Stack_Struct *stack_data, int scale_coef);
+Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t scale_coef);
 
 
 Error_Codes return_error(size_t err_code, const char* file, const char* func, int line);
@@ -85,7 +91,11 @@ Error_Codes return_error(size_t err_code, const char* file, const char* func, in
 Error_Codes put_canaries(Main_Stack_Struct *stack_data);
 
 
-size_t hash_sum(Main_Stack_Struct stack_data);
+size_t struct_elem_hash(const void* address, size_t size);
+
+
+size_t hash_struct_sum(const Main_Stack_Struct *stack_data);
+
 
 
 #endif //STACK_H_
