@@ -8,10 +8,10 @@
 #include "../stack_headers/colorised_output.h"
 
 
-const uint64_t canary_value  = 0x71EBCEE; //dumayte // FIXME long long to long
+const uint64_t canary_value  = 0x3DB510BA17D4EE; //dumayte // FIXME long long to long
 const size_t canary_offset = sizeof(long) / sizeof(StackElem_t);
 const size_t Struct_Ctor_Size =  8;
-StackElem_t Poison_Element  = '\0';
+StackElem_t Poison_Element  = '~';// ???
 
 
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
@@ -404,7 +404,7 @@ size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
 //TODO canary_t (d_type) cond compile I WAS RIGHT ABOUT CANARIES 
 //TODO make poison instead of '\0' check 'free' poison all in debug
 //TODO push && pop - above 2 strings on release
-//TODO get data_type from console  
+//TODO get data_type from console (?)
 //TODO poison before canaries (?)
 //TODO check poison by address && meaning(?) (all stack)
 //TODO memcpy???????
@@ -412,8 +412,8 @@ size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
 //TODO #ON_DEBUG_NOT_ASSERT assert(!...) // !!!!
 //TODO   
 //TODO  
-//TODO  
-//TODO 
+//TODO for void*: before every push/pop operation need to know size of current elem, stack size in uint8_t
+//TODO checks && realloc will depend on size of current elem
 //TODO  
 //TODO  
 //TODO 
