@@ -8,7 +8,7 @@
 
 int main(void)
 {
-    struct Main_Stack_Struct stack_data = {};
+    Main_Stack_Struct stack_data = {};
 
     stack_data.dump_file = fopen("stack_output.txt", "w"); // FIXME check
     assert(stack_data.dump_file);

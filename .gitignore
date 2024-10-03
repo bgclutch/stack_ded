@@ -1,5 +1,5 @@
 stack
-./stack_output.txt
+*.txt
 .vscode
 *.o 
 

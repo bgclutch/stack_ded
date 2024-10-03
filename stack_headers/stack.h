@@ -16,11 +16,17 @@ enum Error_Codes
     SMTH_WAS_BROKEN           = 0x01,
     STRUCT_ADDRESS_IS_BAD     = 0x02,
     NEG_CAPACITY              = 0x04,
-    NEG_SIZE                  = 0x08,
+    WRONG_HASH                = 0x08,
     SIZE_BIGGER_THAN_CAPACITY = 0x0F,
     FILE_PTR_IS_ZERO          = 0x10,
     //ADD SOME ERRORS CODES
     //realloc error (na podumat')
+};
+
+enum Realloc_Codes
+{
+    REAL_UP   = 2,
+    REAL_DOWN = 4
 };
 
 struct Main_Stack_Struct
@@ -30,7 +36,7 @@ struct Main_Stack_Struct
     size_t               size;
     size_t           capacity;
     FILE*           dump_file;
-    uint64_t         hash_sum;
+    uint64_t      hash_struct;
     uint64_t  right_st_canary;
 };
 
@@ -55,7 +61,7 @@ int realloc_if_down_needed(Main_Stack_Struct stack_data);
 int is_struct_addresses_okay(Main_Stack_Struct *stack_data);
 
 
-size_t stack_is_err(Main_Stack_Struct *stack_data);
+size_t stack_is_err(Main_Stack_Struct *stack_data, size_t hash);
 
 
 void put_stars(FILE* file);
@@ -68,6 +74,9 @@ Error_Codes return_error(size_t err_code, const char* file, const char* func, in
 
 
 Error_Codes put_canaries(Main_Stack_Struct *stack_data);
+
+
+size_t hash_sum(Main_Stack_Struct stack_data);
 
 
 #endif //STACK_H_
