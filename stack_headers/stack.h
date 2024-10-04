@@ -3,6 +3,8 @@
 
 
 #define DEBUG
+//#define CANARY_MODE
+//#define HASH_MODE
 
 #ifdef DEBUG 
     #define DEBUG_VAR(...) __VA_ARGS__
@@ -12,6 +14,20 @@
     #define DEBUG_VAR(...)  
     #define ASSERT(...) 
     #define RETURN_ERROR(...) 
+#endif
+
+
+#ifdef CANARY_MODE
+    #define CANARIES(...) __VA_ARGS__
+#else
+    #define CANARIES(...)  
+#endif
+
+
+#ifdef HASH_MODE
+    #define HASH(...) __VA_ARGS__
+#else   
+    #define HASH(...)
 #endif
 
 #define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__) 
@@ -76,7 +92,7 @@ size_t realloc_if_down_needed(Main_Stack_Struct stack_data);
 int is_struct_addresses_okay(Main_Stack_Struct *stack_data);
 
 
-size_t stack_is_err(Main_Stack_Struct *stack_data, size_t hash);
+size_t stack_is_err(Main_Stack_Struct *stack_data);
 
 
 void put_stars(FILE* file);
