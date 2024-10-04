@@ -18,12 +18,12 @@
 #endif
 
 const size_t Struct_Ctor_Size =  8;
-static StackElem_t Poison_Element  = '~';// ???
+static StackElem_t Poison_Element  = '~'; // ???
 
 
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 {
-    ASSERT(stack_data && "stack data address is NULL") DEBUG_VAR(;)      // FIXME assert or make disableable
+    ASSERT(stack_data && "stack data address is NULL") DEBUG_VAR(;)      // FIXME assert or make disableable (simple error here)
 
     #ifdef CANARIES
         stack_data->stack_array = (char*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) +
@@ -44,8 +44,10 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
     stack_data->right_st_canary = canary_value;)
 
 
-    for(size_t i = canary_offset; i < stack_data->capacity; i++)
-        stack_data->stack_array[i] = Poison_Element;
+    memset(stack_data->stack_array + canary_offset, Poison_Element, stack_data->capacity);
+
+    // for(size_t i = canary_offset; i < stack_data->capacity; i++)
+    //     stack_data->stack_array[i] = Poison_Element;
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
@@ -89,22 +91,10 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
     if(realloc_code == STACK_NOT_REALLOCED) 
         return realloc_code;
 
+
     ASSERT(!realloc_code && "realloc error") DEBUG_VAR(;)  // FIXME check errors
 
     stack_data->stack_array[canary_offset + stack_data->size++] = elem;
-
-
-    #ifdef BREAK_MODE
-    {
-        stack_data->left_st_canary = 0;
-        stack_data->size = -4;
-        stack_data->capacity = -10;
-        stack_data->aboba = nullptr;
-        stack_data->stack_array = nullptr;
-        stack_data->right_st_canary = 8874187721;
-        
-    }
-    #endif
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
@@ -224,11 +214,14 @@ size_t stack_is_err(Main_Stack_Struct *stack_data) // FIXME CHANGE ZALUPA
     size_t errors_sum = 0;
     HASH(size_t my_hash = hash_struct_sum(stack_data);)
 
-    if(!is_struct_addresses_okay(stack_data))   errors_sum += 0x02;
+    if(!is_struct_addresses_okay(stack_data))   errors_sum += 0x02;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     if(stack_data->capacity <= 0)               errors_sum += 0x04;
     HASH(if(stack_data->hash_struct != my_hash) errors_sum += 0x08;)
     if(stack_data->size > stack_data->capacity) errors_sum += 0x0F;
     if(stack_data->dump_file == nullptr)        errors_sum += 0x10;
+
+    for(size_t i = 0; i < stack_data->size; i++)
+        if(stack_data->stack_array[i + canary_offset] == Poison_Element) errors_sum += 0x40;
 
     return errors_sum;)
 }
@@ -326,7 +319,8 @@ Error_Codes return_error(size_t err_code, const char* file, const char* func, in
                         YELLOW_TEXT("NEG_CAPACITY          =  ")   RED_TEXT("4\n")
                         YELLOW_TEXT("WRONG_HASH            =  ")   RED_TEXT("8\n")
                         YELLOW_TEXT("STACK_OVERFLOW        = ")   RED_TEXT("16\n")
-                        YELLOW_TEXT("FILE_PTR_IS_ZERO      = ")   RED_TEXT("32\n\n"));
+                        YELLOW_TEXT("FILE_PTR_IS_ZERO      = ")   RED_TEXT("32\n")
+                        YELLOW_TEXT("POISON_IN_STACK       = ")   RED_TEXT("64\n\n"));
 
         ASSERT(0) DEBUG_VAR(;)  // FIXME
         return ALL_IS_OK;
@@ -380,11 +374,11 @@ size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
 {
     size_t stack_hash_sum = 0;
 
-    CANARIES(stack_hash_sum += struct_elem_hash((uint8_t*)stack_data->left_st_canary,
+    CANARIES(stack_hash_sum += struct_elem_hash(                              (uint8_t*)stack_data->left_st_canary,
                                                                               sizeof(stack_data->left_st_canary));)
  
-    stack_hash_sum += struct_elem_hash(stack_data->stack_array,           stack_data->capacity * sizeof(StackElem_t) + 
-                                                                          2 * sizeof(canary_value));
+    stack_hash_sum += struct_elem_hash(stack_data->stack_array,               stack_data->capacity * sizeof(StackElem_t) + 
+                                                                              2 * sizeof(canary_value));
  
     stack_hash_sum += struct_elem_hash(&stack_data->size,                     sizeof(stack_data->size));
  

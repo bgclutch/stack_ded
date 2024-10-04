@@ -15,7 +15,7 @@ int main(void)
 
     StackElem_t elem = 0;
 
-    char test[] = {'9', '1', '^', 'k', '!', '@', '4', '/', 'j', '4', 'o', 'p', '3', 'N', 'i', '5'};
+    char test[] = {'9', '1', '^', 'k', '~', '@', '4', '~', 'j', '4', 'o', 'p', '3', 'N', 'i', '5'};
     
     DEBUG_VAR(Error_Codes ctor_result = ) 
     

@@ -1,7 +1,7 @@
 #ifndef STACK_H_
 #define STACK_H_
 
-
+// FLAGS
 #define DEBUG
 #define CANARY_MODE
 #define HASH_MODE
@@ -32,8 +32,6 @@
     #define HASH(...)
 #endif
 
-//#define BREAK_MODE
-
 
 
 #include <stdio.h>
@@ -56,7 +54,8 @@ enum Error_Codes
     STACK_OVERFLOW             = 0x0F,
     FILE_PTR_IS_ZERO           = 0x10,
     EMPTY_STACK                = 0x20,
-    STACK_NOT_REALLOCED        = 0x72,                                                                                                  
+    POISON_IN_STACK            = 0x40,
+    STACK_NOT_REALLOCED        = 0x96,                                                                                                  
     //ADD SOME ERRORS CODES
     //realloc error (na podumat')
 };
