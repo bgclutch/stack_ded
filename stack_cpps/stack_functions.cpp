@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 #include <assert.h>
 #include <string.h>
 
@@ -9,29 +10,27 @@
 
 
 #ifdef CANARY_MODE
-    const size_t canary_offset = sizeof(long) / sizeof(StackElem_t);
-    const uint64_t canary_value  = 0x3DB510BA17D4EE; //dumayte // FIXME long long to long
-#else
-    const size_t canary_offset   = 0;
-    const uint64_t canary_value  = 0; //dumayte // FIXME long long to long
+    const uint64_t canary_value  = 0x3DB510BA17D4EE; //dumayte podpisatsa
 
 #endif
 
-const size_t Struct_Ctor_Size =  8;
-static StackElem_t Poison_Element  = '~'; // ???
+static const size_t Struct_Ctor_Size =  8;// TODO make as argument for err
+static const uint8_t Poison_Byte  = '~';
+//static StackElem_t Dead_Byte = '№';
 
 
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 {   
-    #ifdef CANARIES
+    ASSERT(stack_data && "huy tebe a ne stack") DEBUG_VAR(;)
+    #ifdef CANARY_MODE
         stack_data->stack_array = (char*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) +
-                                                 2 * canary_offset, sizeof(char));
+                                                 2 * sizeof(canary_value), sizeof(char));
     #else
         stack_data->stack_array = (char*) calloc(Struct_Ctor_Size, sizeof(StackElem_t));
     #endif
 
-    if(stack_data->stack_array == nullptr) //hueta check
-        return STACK_ARRAY_ADDRESS_IS_BAD; // TODO make 1 pointer instead of 2
+    if(stack_data->stack_array == nullptr) 
+        return STACK_ARRAY_ADDRESS_IS_BAD;
     
     stack_data->capacity = Struct_Ctor_Size;
     stack_data->size     = 0;
@@ -39,18 +38,24 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 
     CANARIES
     (stack_data->left_st_canary  = canary_value;
-    stack_data->right_st_canary = canary_value;)
+     stack_data->right_st_canary = canary_value;)
 
 
-    memset(stack_data->stack_array + canary_offset, Poison_Element, stack_data->capacity);
+    memset(stack_data->stack_array CANARIES(+ sizeof(canary_value)), Poison_Byte, stack_data->capacity);
+
+    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+    
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+    CANARIES(DEBUG_VAR(Error_Codes put_canaries_code = )put_canaries(stack_data);)
+
+    CANARIES(ASSERT(!put_canaries_code && "put canaries error") DEBUG_VAR(;))
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    CANARIES(Error_Codes put_canaries_code = put_canaries(stack_data);)
-
-    CANARIES(ASSERT(!put_canaries_code && "put canaries error") DEBUG_VAR(;)) 
-
-    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
     
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;) 
     STACK_DUMP(stack_data);
@@ -60,12 +65,14 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
 {
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;) 
-    STACK_DUMP(stack_data);
+    STACK_DUMP(stack_data); // TODO make logs disableable
 
     if(!is_struct_addresses_okay(stack_data)) //address and meanings
         return STACK_ARRAY_ADDRESS_IS_BAD;
 
-    memset(stack_data->stack_array + canary_offset, Poison_Element, stack_data->capacity); // FIXME memset is only for bytes
+    memset(stack_data->stack_array CANARIES(+ sizeof(canary_value)), Poison_Byte, stack_data->capacity);
+
+    RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;)
 
     free(stack_data->stack_array); 
     stack_data->stack_array = nullptr;
@@ -81,24 +88,28 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    Error_Codes realloc_code = realloc_maker(stack_data, realloc_if_up_needed(*stack_data));
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+    Error_Codes realloc_code = realloc_maker(stack_data, realloc_if_up_needed(*stack_data)); //TODO compare capacities
 
     if(realloc_code == STACK_NOT_REALLOCED) 
         return realloc_code;
 
+    ASSERT(!realloc_code && "realloc error") DEBUG_VAR(;)
 
-    ASSERT(!realloc_code && "realloc error") DEBUG_VAR(;)  // FIXME check errors
-
-    stack_data->stack_array[canary_offset + stack_data->size++] = elem;
+    stack_data->stack_array[CANARIES(sizeof(canary_value)) + stack_data->size++] = elem;
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;)
     STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
 
-//FIXME error checking
 Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 {
     ASSERT(elem) DEBUG_VAR(;) 
@@ -110,15 +121,22 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
         return EMPTY_STACK;
     }
 
-    *elem = stack_data->stack_array[canary_offset + (--stack_data->size)]; 
+    *elem = stack_data->stack_array[CANARIES(sizeof(canary_value)) + (--stack_data->size)]; 
+
+    #ifndef DEBUG
+        fprintf(stderr, "%c\n", *elem);
+    #endif
 
     DEBUG_VAR
     (put_stars(stack_data->dump_file);
-    fprintf(stack_data->dump_file, "popped elem '%c'\n", *elem);)
+     fprintf(stack_data->dump_file, "popped elem '%c'\n", *elem);)
 
-    stack_data->stack_array[canary_offset + stack_data->size] = Poison_Element;  
+    stack_data->stack_array[CANARIES(sizeof(canary_value)) + stack_data->size] = Poison_Byte;  
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
 
     Error_Codes realloc_code = realloc_maker(stack_data, realloc_if_down_needed(*stack_data));
 
@@ -129,15 +147,17 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;) 
     STACK_DUMP(stack_data); // TODO use macros
     return ALL_IS_OK;
 }
 
-
+#ifdef DEBUG
 void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const char* func_name, size_t line) //add checks
 {
-    DEBUG_VAR(
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;) 
 
     put_stars(stack_data->dump_file);
@@ -158,7 +178,7 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     put_stars(stack_data->dump_file);   
 
     fprintf  (stack_data->dump_file, "stack address begin: %p\n",       stack_data->stack_array);
-    fprintf  (stack_data->dump_file, "stack address end: %p\n",        &stack_data->stack_array[stack_data->capacity]);
+    fprintf  (stack_data->dump_file, "stack address end: %p\n",        &stack_data->stack_array[stack_data->capacity CANARIES(+ 2 *sizeof(canary_value))]);
     put_stars(stack_data->dump_file);
 
     CANARIES(
@@ -167,19 +187,19 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
 
     for(size_t i = 0; i < stack_data->size; i++) // printing NON empty element
     {
-        fprintf(stack_data->dump_file, "stack element non empty %zu: %c\n",           i,   stack_data->stack_array[i + canary_offset]);
-        fprintf(stack_data->dump_file, "stack element non empty %zu address: %p\n\n", i, &(stack_data->stack_array[i + canary_offset]));
+        fprintf(stack_data->dump_file, "stack element non empty %zu: %c\n",           i,   stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]);
+        fprintf(stack_data->dump_file, "stack element non empty %zu address: %p\n\n", i, &(stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]));
     }
     
     for(size_t i = stack_data->size; i < stack_data->capacity; i++) // printing empty element
     {
-        fprintf(stack_data->dump_file, "stack element empty %zu: %c\n",           i,       stack_data->stack_array[i + canary_offset]);
-        fprintf(stack_data->dump_file, "stack element empty %zu address: %p\n\n", i,     &(stack_data->stack_array[i + canary_offset]));
+        fprintf(stack_data->dump_file, "stack element empty %zu: %c\n",           i,       stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]);
+        fprintf(stack_data->dump_file, "stack element empty %zu address: %p\n\n", i,     &(stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]));
     }
 
     CANARIES(
-    fprintf(stack_data->dump_file, "right stack canary: 0x%0lx\n", *(uint64_t*)(stack_data->stack_array + canary_offset + stack_data->capacity));
-    fprintf(stack_data->dump_file, "right stack canary address: %p\n",          stack_data->stack_array + canary_offset + stack_data->capacity);
+    fprintf(stack_data->dump_file, "right stack canary: 0x%0lx\n", *(uint64_t*)(stack_data->stack_array  CANARIES(+ sizeof(canary_value)) + stack_data->capacity));
+    fprintf(stack_data->dump_file, "right stack canary address: %p\n",          stack_data->stack_array  CANARIES(+ sizeof(canary_value)) + stack_data->capacity);
     put_stars(stack_data->dump_file);)
 
     HASH(
@@ -199,74 +219,78 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;))
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+    RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;)
 }
+#endif
 
-
-size_t stack_is_err(Main_Stack_Struct *stack_data) // FIXME CHANGE ZALUPA
+#ifdef DEBUG
+size_t stack_is_err(Main_Stack_Struct *stack_data)
 {
-    DEBUG_VAR(
     size_t errors_sum = 0;
     HASH(size_t my_hash = hash_struct_sum(stack_data);)
+    HASH(size_t stack_hash = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                              CANARIES(+ 2 * sizeof(canary_value)));)
 
-    if(!is_struct_addresses_okay(stack_data))   errors_sum += 0x02;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-    if(stack_data->capacity <= 0)               errors_sum += 0x04;
-    HASH(if(stack_data->hash_struct != my_hash) errors_sum += 0x08;)
-    if(stack_data->size > stack_data->capacity) errors_sum += 0x0F;
-    if(stack_data->dump_file == nullptr)        errors_sum += 0x10;
+    if(!is_struct_addresses_okay(stack_data))      errors_sum += 0x02;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    if(stack_data->capacity <= 0)                  errors_sum += 0x04;
+    HASH(if(stack_data->hash_struct != my_hash)    errors_sum += 0x08;)
+    HASH(if(stack_data->hash_stack  != stack_hash) errors_sum += 0x08;)
+    if(stack_data->size > stack_data->capacity)    errors_sum += 0x0F;
+    if(stack_data->dump_file == nullptr)           errors_sum += 0x10;
 
-    return errors_sum;)
+    return errors_sum;
 }
+#endif
 
 
-Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t scale_coef) // FIXME add checker
+Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity) // FIXME chacnge scale_coeff to size
 {
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;)
 
-    if(scale_coef != 2 && scale_coef != 4) //???
+    if(new_capacity != stack_data->capacity)
     {
-        return ALL_IS_OK; 
+
+        StackElem_t *new_array = (StackElem_t*) realloc(stack_data->stack_array,
+                                                       (new_capacity CANARIES(+ 2 * sizeof(canary_value)))); // FIXME fix check
+
+        if(new_array == nullptr)
+        {
+            fprintf(stderr, "stack RED_TEXT(couldn't realloced) at address:YELLOW_TEXT(%p\n)", new_array);
+            return STACK_NOT_REALLOCED;
+        }
+
+
+        stack_data->capacity      = new_capacity;
+        stack_data->stack_array   = new_array;
+
+
+        if(new_capacity > stack_data->capacity)
+            memset(new_array CANARIES(+ sizeof(canary_value)) + stack_data->size, Poison_Byte, (new_capacity - stack_data->size) * sizeof(StackElem_t));
+
+        HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+        HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+        CANARIES(DEBUG_VAR(Error_Codes put_canaries_code = )put_canaries(stack_data);)
+
+        CANARIES(ASSERT(!put_canaries_code && "put canaries error") DEBUG_VAR(;))
+
+        HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+        HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+        RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;) 
+        return ALL_IS_OK;
     }
-
-    size_t new_capacity = 0;
-
-    if(scale_coef == 2)
+    else
     {
-        new_capacity = stack_data->capacity * scale_coef;
+        return ALL_IS_OK;
     }
-    else if (scale_coef == 4)
-    {
-        new_capacity = stack_data->capacity / scale_coef;
-    }
-
-
-    StackElem_t *new_array = (StackElem_t*) realloc(stack_data->stack_array,
-                                                   (new_capacity + 2 * canary_offset)); // FIXME fix check
-
-    if(new_array == nullptr)
-    {
-        fprintf(stderr, "stack RED_TEXT(couldn't realloced) at address:YELLOW_TEXT(%p\n)", new_array);
-        return STACK_NOT_REALLOCED;
-    }
-
-
-    stack_data->capacity      = new_capacity;
-    stack_data->stack_array   = new_array;
-
-
-    if(scale_coef == 2)
-        memset((new_array + stack_data->size + canary_offset), Poison_Element, (stack_data->capacity - stack_data->size) * sizeof(StackElem_t));
-
-    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
-
-    CANARIES(Error_Codes put_canaries_code = put_canaries(stack_data));
-
-    CANARIES(ASSERT(!put_canaries_code && "put canaries error") DEBUG_VAR(;)) 
-    
-    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
-
-    RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;) 
-    return ALL_IS_OK;
 }
 
 
@@ -280,13 +304,12 @@ void put_stars(FILE* file)
 }
 
 
-size_t realloc_if_up_needed(Main_Stack_Struct stack_data)
+size_t realloc_if_up_needed(Main_Stack_Struct stack_data) // FIXME add more conditions for dead bytes
 {
-
     if(stack_data.capacity - stack_data.size <= 1)
-        return 2;
+        return stack_data.capacity * 2;
     else
-        return 0;
+        return stack_data.capacity;
 
 }
 
@@ -294,12 +317,13 @@ size_t realloc_if_up_needed(Main_Stack_Struct stack_data)
 size_t realloc_if_down_needed(Main_Stack_Struct stack_data)
 {
     if(4 <= stack_data.size && stack_data.size * 4 <= stack_data.capacity)
-        return 4;
+        return stack_data.capacity / 4;
     else
-        return 0;
+        return stack_data.capacity;
 }
 
-Error_Codes return_error(size_t err_code, const char* file, const char* func, int line)
+#ifdef DEBUG
+void_sex return_error(size_t err_code, const char* file, const char* func, int line) // TODO make void
 {
     if(err_code != 0)
     {
@@ -310,17 +334,13 @@ Error_Codes return_error(size_t err_code, const char* file, const char* func, in
                         YELLOW_TEXT("STRUCT_ADDRESS_IS_BAD =  ")   RED_TEXT("2\n")
                         YELLOW_TEXT("NEG_CAPACITY          =  ")   RED_TEXT("4\n")
                         YELLOW_TEXT("WRONG_HASH            =  ")   RED_TEXT("8\n")
-                        YELLOW_TEXT("STACK_OVERFLOW        = ")   RED_TEXT("16\n")
-                        YELLOW_TEXT("FILE_PTR_IS_ZERO      = ")   RED_TEXT("32\n\n"));
+                        YELLOW_TEXT("STACK_OVERFLOW        = ")    RED_TEXT("16\n")
+                        YELLOW_TEXT("FILE_PTR_IS_ZERO      = ")    RED_TEXT("32\n\n"));
 
-        ASSERT(0) DEBUG_VAR(;)  // FIXME
-        return ALL_IS_OK;
-    }
-    else
-    {
-        return ALL_IS_OK;
+        ASSERT(0) DEBUG_VAR(;)
     }
 }
+#endif
 
 
 int is_struct_addresses_okay(Main_Stack_Struct *stack_data)
@@ -332,22 +352,38 @@ int is_struct_addresses_okay(Main_Stack_Struct *stack_data)
 }
 
 
-Error_Codes put_canaries(Main_Stack_Struct *stack_data)
-{
+// Error_Codes fill_dead_bytes(char* array, size_t size)
+// {
+//     size_t num_of_dead_bytes = (size_t)array % size;
 
+//     if(!num_of_dead_bytes)
+//     {
+//         return ALL_IS_OK;
+//     }
+    
+//     memset(array, Dead_Byte, num_of_dead_bytes);
+// }
+
+#ifdef CANARY_MODE
+Error_Codes put_canaries(Main_Stack_Struct *stack_data)
+{   
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;)
 
     *((uint64_t*)stack_data->stack_array) = canary_value;
 
-    *((uint64_t*)(stack_data->stack_array + canary_offset + stack_data->capacity)) = canary_value;
-
+    *((uint64_t*)(stack_data->stack_array + sizeof(canary_value) + stack_data->capacity)) = canary_value;
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity 
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;) 
     return ALL_IS_OK;
 }
+#endif
 
+#ifdef HASH_MODE
 size_t struct_elem_hash(const void* address, size_t size)
 {
     size_t hash = 5831;
@@ -359,18 +395,20 @@ size_t struct_elem_hash(const void* address, size_t size)
 
     return hash;
 }
+#endif
 
 
-size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
+#ifdef HASH_MODE
+size_t hash_struct_sum(Main_Stack_Struct *stack_data)
 {
-    size_t stack_hash_sum = 0;
+    size_t stack_hash_sum   = 0;
 
     CANARIES(stack_hash_sum += struct_elem_hash(&stack_data->left_st_canary,
                                                 sizeof(stack_data->left_st_canary));)
  
     stack_hash_sum += struct_elem_hash(         stack_data->stack_array,               
-                                                stack_data->capacity * sizeof(StackElem_t) + 
-                                                2 * sizeof(canary_value));
+                                                stack_data->capacity * sizeof(StackElem_t) 
+                                                CANARIES(+ 2 * sizeof(canary_value)));
  
     stack_hash_sum += struct_elem_hash(         &stack_data->size,                     
                                                 sizeof(stack_data->size));
@@ -380,9 +418,15 @@ size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
 
     CANARIES(stack_hash_sum += struct_elem_hash(&stack_data->right_st_canary, 
                                                 sizeof(stack_data->right_st_canary));)
+
+
+
+    // stack_hash_sum = struct_elem_hash(stack_data->stack_array CANARIES(- sizeof(canary_value)),
+    //                                   sizeof(Main_Stack_Struct));
     
     return stack_hash_sum;
 }
+#endif
 
 
 
@@ -404,7 +448,7 @@ size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
 //TODO 
 //TODO  
 //TODO  
-//TODO 
+//TODO dead bytes in stack
 //TODO  
 //TODO  
 //TODO 

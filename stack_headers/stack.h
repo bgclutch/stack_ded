@@ -3,14 +3,14 @@
 
 // FLAGS
 #define DEBUG
-#define CANARY_MODE
-#define HASH_MODE
 
 #ifdef DEBUG 
     #define DEBUG_VAR(...) __VA_ARGS__
     #define ASSERT(...) assert(__VA_ARGS__)
     #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
     #define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__) 
+    #define CANARY_MODE
+    #define HASH_MODE
 #else
     #define DEBUG_VAR(...)  
     #define ASSERT(...) 
@@ -62,13 +62,26 @@ enum Error_Codes
 
 struct Main_Stack_Struct
 { 
-    CANARIES(uint64_t   left_st_canary;)
-    StackElem_t*            stack_array;  
-    size_t                         size;
-    size_t                     capacity;
-    DEBUG_VAR(FILE*           dump_file;)
-    HASH(uint64_t           hash_struct;)
-    CANARIES(uint64_t   right_st_canary;)
+    #ifdef CANARY_MODE
+    uint64_t  left_st_canary; 
+    #endif
+
+    StackElem_t* stack_array;  
+    size_t              size;
+    size_t          capacity;
+
+    #ifdef DEBUG
+    FILE*          dump_file;
+    #endif
+    #ifdef HASH_MODE
+    uint64_t     hash_struct;
+    #endif
+    #ifdef HASH_MODE
+    uint64_t     hash_stack;
+    #endif
+    #ifdef CANARY_MODE
+    uint64_t right_st_canary;
+    #endif
 };
 
 
@@ -98,10 +111,13 @@ size_t stack_is_err(Main_Stack_Struct *stack_data);
 void_sex put_stars(FILE* file);
 
 
-Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t scale_coef);
+Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity);
 
 
-Error_Codes return_error(size_t err_code, const char* file, const char* func, int line);
+void_sex return_error(size_t err_code, const char* file, const char* func, int line);
+
+
+//Error_Codes fill_dead_bytes(char* array, size_t size);
 
 
 Error_Codes put_canaries(Main_Stack_Struct *stack_data);
@@ -110,7 +126,7 @@ Error_Codes put_canaries(Main_Stack_Struct *stack_data);
 size_t struct_elem_hash(const void* address, size_t size);
 
 
-size_t hash_struct_sum(const Main_Stack_Struct *stack_data);
+size_t hash_struct_sum(Main_Stack_Struct *stack_data);
 
 
 
