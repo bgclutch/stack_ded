@@ -365,17 +365,21 @@ size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
 {
     size_t stack_hash_sum = 0;
 
-    CANARIES(stack_hash_sum += struct_elem_hash(                              (uint8_t*)stack_data->left_st_canary,
-                                                                              sizeof(stack_data->left_st_canary));)
+    CANARIES(stack_hash_sum += struct_elem_hash(&stack_data->left_st_canary,
+                                                sizeof(stack_data->left_st_canary));)
  
-    stack_hash_sum += struct_elem_hash(stack_data->stack_array,               stack_data->capacity * sizeof(StackElem_t) + 
-                                                                              2 * sizeof(canary_value));
+    stack_hash_sum += struct_elem_hash(         stack_data->stack_array,               
+                                                stack_data->capacity * sizeof(StackElem_t) + 
+                                                2 * sizeof(canary_value));
  
-    stack_hash_sum += struct_elem_hash(&stack_data->size,                     sizeof(stack_data->size));
+    stack_hash_sum += struct_elem_hash(         &stack_data->size,                     
+                                                sizeof(stack_data->size));
  
-    stack_hash_sum += struct_elem_hash(&stack_data->capacity,                 sizeof(stack_data->capacity));
+    stack_hash_sum += struct_elem_hash(         &stack_data->capacity,                
+                                                sizeof(stack_data->capacity));
 
-    CANARIES(stack_hash_sum += struct_elem_hash(&stack_data->right_st_canary, sizeof(stack_data->right_st_canary));)
+    CANARIES(stack_hash_sum += struct_elem_hash(&stack_data->right_st_canary, 
+                                                sizeof(stack_data->right_st_canary));)
     
     return stack_hash_sum;
 }
@@ -395,6 +399,78 @@ size_t hash_struct_sum(const Main_Stack_Struct *stack_data)
 //TODO  
 //TODO for void*: before every push/pop operation need to know size of current elem, stack size in uint8_t
 //TODO checks && realloc will depend on size of current elem
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO     
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
+//TODO  
+//TODO  
+//TODO 
 //TODO  
 //TODO  
 //TODO 
