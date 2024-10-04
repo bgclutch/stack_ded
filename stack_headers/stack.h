@@ -3,17 +3,19 @@
 
 
 #define DEBUG
-//#define CANARY_MODE
-//#define HASH_MODE
+#define CANARY_MODE
+#define HASH_MODE
 
 #ifdef DEBUG 
     #define DEBUG_VAR(...) __VA_ARGS__
     #define ASSERT(...) assert(__VA_ARGS__)
     #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
+    #define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__) 
 #else
     #define DEBUG_VAR(...)  
     #define ASSERT(...) 
-    #define RETURN_ERROR(...) 
+    #define RETURN_ERROR(...)
+    #define STACK_DUMP(...)
 #endif
 
 
@@ -30,7 +32,6 @@
     #define HASH(...)
 #endif
 
-#define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__) 
 //#define BREAK_MODE
 
 
@@ -62,13 +63,13 @@ enum Error_Codes
 
 struct Main_Stack_Struct
 { 
-    uint64_t   left_st_canary;
-    StackElem_t*  stack_array;  
-    size_t               size;
-    size_t           capacity;
-    FILE*           dump_file;
-    uint64_t      hash_struct;
-    uint64_t  right_st_canary;
+    CANARIES(uint64_t   left_st_canary;)
+    StackElem_t*            stack_array;  
+    size_t                         size;
+    size_t                     capacity;
+    DEBUG_VAR(FILE*           dump_file;)
+    HASH(uint64_t           hash_struct;)
+    CANARIES(uint64_t   right_st_canary;)
 };
 
 
@@ -95,7 +96,7 @@ int is_struct_addresses_okay(Main_Stack_Struct *stack_data);
 size_t stack_is_err(Main_Stack_Struct *stack_data);
 
 
-void put_stars(FILE* file);
+void_sex put_stars(FILE* file);
 
 
 Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t scale_coef);

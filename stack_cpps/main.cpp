@@ -10,7 +10,7 @@ int main(void)
 {
     Main_Stack_Struct stack_data = {};
 
-    stack_data.dump_file = fopen("stack_output.txt", "w"); // FIXME check
+    DEBUG_VAR(stack_data.dump_file = fopen("stack_output.txt", "w");) // FIXME check
     ASSERT(stack_data.dump_file && "dump file open error") DEBUG_VAR(;)
 
     StackElem_t elem = 0;
@@ -26,9 +26,7 @@ int main(void)
     for(size_t i = 0; i < sizeof(test) / sizeof(StackElem_t); i++)
     {
         elem = test[i];
-        DEBUG_VAR(Error_Codes push_result =)
-        
-        stack_push(&stack_data, elem);
+        Error_Codes push_result = stack_push(&stack_data, elem);
 
         if(push_result == STACK_NOT_REALLOCED) 
         {
@@ -42,9 +40,7 @@ int main(void)
 
     for(size_t i = stack_data.size; i >= 1; i--)
     {
-        DEBUG_VAR(Error_Codes pop_result =) 
-        
-        stack_pop(&stack_data, &elem);
+        Error_Codes pop_result = stack_pop(&stack_data, &elem);
 
         if(pop_result == STACK_NOT_REALLOCED) 
         {
@@ -58,8 +54,9 @@ int main(void)
     DEBUG_VAR(Error_Codes dtor_result = ) dtor_stack(&stack_data);
     ASSERT(!dtor_result && "dtor result error") DEBUG_VAR(;) 
 
-    if(fclose(stack_data.dump_file) != 0)
-        printf("ty eblan?\n");
+    DEBUG_VAR
+    (if(fclose(stack_data.dump_file) != 0)
+        printf("ty eblan?\n");)
 
     return 0;
 }
