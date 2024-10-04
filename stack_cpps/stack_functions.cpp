@@ -220,7 +220,7 @@ size_t stack_is_err(Main_Stack_Struct *stack_data) // FIXME CHANGE ZALUPA
     if(stack_data->size > stack_data->capacity) errors_sum += 0x0F;
     if(stack_data->dump_file == nullptr)        errors_sum += 0x10;
 
-    for(size_t i = 0; i < stack_data->size; i++)
+    for(size_t i = 0; i < stack_data->size; i++) 
         if(stack_data->stack_array[i + canary_offset] == Poison_Element) errors_sum += 0x40;
 
     return errors_sum;)
