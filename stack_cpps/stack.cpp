@@ -16,6 +16,7 @@
 
 static const size_t Struct_Ctor_Size =  8;// TODO make as argument for err
 static const uint8_t Poison_Byte  = '~';
+static uint8_t Stack_Checker_Byte = '0';
 //static StackElem_t Dead_Byte = '№';
 
 
@@ -107,6 +108,7 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     RETURN_ERROR(stack_is_err(stack_data)) DEBUG_VAR(;)
     STACK_DUMP(stack_data);
+    Stack_Checker_Byte = '1';
     return ALL_IS_OK;
 }
 
@@ -118,8 +120,13 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
     
     if(stack_data->size == 0)
     {
+        if(Stack_Checker_Byte == '0')
+        {
+            fprintf(stderr, GREEN_TEXT("ah ty suka nahuya vsyo slomal(\n"));
+        }
         return EMPTY_STACK;
     }
+        
 
     *elem = stack_data->stack_array[CANARIES(sizeof(canary_value)) + (--stack_data->size)]; 
 
@@ -262,13 +269,11 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity) //
             return STACK_NOT_REALLOCED;
         }
 
+        if(new_capacity > stack_data->capacity)
+            memset((new_array + stack_data->size + CANARIES(+ sizeof(canary_value))), Poison_Byte, (new_capacity - stack_data->size) * sizeof(StackElem_t));
 
         stack_data->capacity      = new_capacity;
         stack_data->stack_array   = new_array;
-
-
-        if(new_capacity > stack_data->capacity)
-            memset(new_array CANARIES(+ sizeof(canary_value)) + stack_data->size, Poison_Byte, (new_capacity - stack_data->size) * sizeof(StackElem_t));
 
         HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 

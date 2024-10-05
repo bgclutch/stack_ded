@@ -37,7 +37,6 @@ int main(void)
         ASSERT(!push_result && "push result error") DEBUG_VAR(;) 
     }
 
-
     for(size_t i = stack_data.size; i >= 1; i--)
     {
         Error_Codes pop_result = stack_pop(&stack_data, &elem);
