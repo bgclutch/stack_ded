@@ -4,16 +4,16 @@
 // FLAGS
 #define DEBUG
 
-#ifdef DEBUG 
+#ifdef DEBUG
     #define DEBUG_VAR(...) __VA_ARGS__
     #define ASSERT(...) assert(__VA_ARGS__)
     #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
-    #define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__) 
+    #define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__)
     #define CANARY_MODE
     #define HASH_MODE
 #else
-    #define DEBUG_VAR(...)  
-    #define ASSERT(...) 
+    #define DEBUG_VAR(...)
+    #define ASSERT(...)
     #define RETURN_ERROR(...)
     #define STACK_DUMP(...)
 #endif
@@ -22,13 +22,13 @@
 #ifdef CANARY_MODE
     #define CANARIES(...) __VA_ARGS__
 #else
-    #define CANARIES(...)  
+    #define CANARIES(...)
 #endif
 
 
 #ifdef HASH_MODE
     #define HASH(...) __VA_ARGS__
-#else   
+#else
     #define HASH(...)
 #endif
 
@@ -44,7 +44,7 @@ typedef char StackElem_t;
 
 // FIXME make typedef StackElem_t
 
-enum Error_Codes 
+enum Error_Codes
 {
     ALL_IS_OK                  = 0x00,
     SMTH_WAS_BROKEN            = 0x01,
@@ -55,18 +55,18 @@ enum Error_Codes
     FILE_PTR_IS_ZERO           = 0x10,
     EMPTY_STACK                = 0x20,
     POISON_IN_STACK            = 0x40,
-    STACK_NOT_REALLOCED        = 0x96,                                                                                                  
+    STACK_NOT_REALLOCED        = 0x96,
     //ADD SOME ERRORS CODES
     //realloc error (na podumat')
 };
 
 struct Main_Stack_Struct
-{ 
+{
     #ifdef CANARY_MODE
-    uint64_t  left_st_canary; 
+    uint64_t  left_st_canary;
     #endif
 
-    StackElem_t* stack_array;  
+    StackElem_t* stack_array;
     size_t              size;
     size_t          capacity;
 
