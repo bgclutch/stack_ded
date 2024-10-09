@@ -9,6 +9,7 @@
     #define ASSERT(...) assert(__VA_ARGS__)
     #define RETURN_ERROR(error_sum) return_error(error_sum, __FILE__, __func__, __LINE__)
     #define STACK_DUMP(stack_data)  stack_dump( stack_data, __FILE__, __func__, __LINE__)
+    #define ASSERT_FUNC(...) assert(__VA_ARGS__)
     #define CANARY_MODE
     #define HASH_MODE
 #else
@@ -16,6 +17,7 @@
     #define ASSERT(...)
     #define RETURN_ERROR(...)
     #define STACK_DUMP(...)
+    #define ASSERT_FUNC(...) __VA_ARGS__
 #endif
 
 
@@ -41,8 +43,6 @@
 typedef void void_sex;
 typedef char StackElem_t;
 
-
-// FIXME make typedef StackElem_t
 
 enum Error_Codes
 {
@@ -130,4 +130,4 @@ size_t hash_struct_sum(Main_Stack_Struct *stack_data);
 
 
 
-#endif //STACK_H_
+#endif //STACK_H

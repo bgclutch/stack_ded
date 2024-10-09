@@ -23,12 +23,9 @@ static uint8_t Stack_Checker_Byte = '0';
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 {
     ASSERT(stack_data && "huy tebe a ne stack");
-    #ifdef CANARY_MODE
-        stack_data->stack_array = (StackElem_t*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) +
-                                                        2 * sizeof(canary_value), sizeof(char));
-    #else
-        stack_data->stack_array = (StackElem_t*) calloc(Struct_Ctor_Size, sizeof(StackElem_t));
-    #endif
+
+    stack_data->stack_array = (StackElem_t*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) CANARIES( +
+                                                    2 * sizeof(canary_value)), sizeof(char));
 
     if(stack_data->stack_array == nullptr)
         return STACK_ARRAY_ADDRESS_IS_BAD;
@@ -49,9 +46,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
     HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
-    CANARIES(DEBUG_VAR(Error_Codes put_canaries_code = )put_canaries(stack_data); // TODO macro ASSERT_FUNC
-
-             ASSERT(!put_canaries_code && "put canaries error");)
+    CANARIES(ASSERT_FUNC(DEBUG_VAR(!)put_canaries(stack_data))); // TODO macro ASSERT_FUNC
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
@@ -68,15 +63,17 @@ Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
     RETURN_ERROR(stack_is_err(stack_data));
     STACK_DUMP(stack_data);
 
-    if(!is_struct_addresses_okay(stack_data)) //address and meanings
+    if(!is_struct_addresses_okay(stack_data))
         return STACK_ARRAY_ADDRESS_IS_BAD;
 
     memset(stack_data->stack_array CANARIES(+ sizeof(canary_value)), Poison_Byte, stack_data->capacity);
 
-    // TODO size = 0
+    stack_data->size = 0;
+    stack_data->capacity = Struct_Ctor_Size;
 
     free(stack_data->stack_array);
     stack_data->stack_array = nullptr;
+    stack_data = nullptr;
 
     return ALL_IS_OK;
 }
@@ -157,7 +154,7 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
-    STACK_DUMP(stack_data); // TODO use macros
+    STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
 
@@ -236,17 +233,17 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
 size_t stack_is_err(Main_Stack_Struct *stack_data)
 {
     size_t errors_sum = 0;
-    if(!is_struct_addresses_okay(stack_data))      return        0x02; // TODO use consts
+    if(!is_struct_addresses_okay(stack_data))      return STACK_ARRAY_ADDRESS_IS_BAD;
 
     HASH(size_t my_hash = hash_struct_sum(stack_data);)
     HASH(size_t stack_hash = struct_elem_hash(stack_data->stack_array, stack_data->capacity
                                               CANARIES(+ 2 * sizeof(canary_value)));)
 
-    if(stack_data->capacity <= 0)                  errors_sum += 0x04;
-    HASH(if(stack_data->hash_struct != my_hash)    errors_sum += 0x08;)
-    HASH(if(stack_data->hash_stack  != stack_hash) errors_sum += 0x08;)
-    if(stack_data->size > stack_data->capacity)    errors_sum += 0x0F;
-    if(stack_data->dump_file == nullptr)           errors_sum += 0x10;
+    if(stack_data->capacity <= 0)                  errors_sum += NEG_CAPACITY;
+    HASH(if(stack_data->hash_struct != my_hash)    errors_sum += WRONG_HASH;)
+    HASH(if(stack_data->hash_stack  != stack_hash) errors_sum += WRONG_HASH;)
+    if(stack_data->size > stack_data->capacity)    errors_sum += STACK_OVERFLOW;
+    if(stack_data->dump_file == nullptr)           errors_sum += FILE_PTR_IS_ZERO;
 
     return errors_sum;
 }
@@ -270,8 +267,8 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity)
     }
 
     if(new_capacity > stack_data->capacity)
-        memset((new_array + stack_data->size + CANARIES(+ sizeof(canary_value))), Poison_Byte,
-               (new_capacity - stack_data->size) * sizeof(StackElem_t));
+        memset((new_array + stack_data->size CANARIES(+ sizeof(canary_value))), Poison_Byte,
+              (new_capacity - stack_data->size) * sizeof(StackElem_t));
 
     stack_data->capacity      = new_capacity;
     stack_data->stack_array   = new_array;
@@ -281,9 +278,7 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity)
     HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
                                                 CANARIES(+ 2 * sizeof(canary_value))));
 
-    CANARIES(DEBUG_VAR(Error_Codes put_canaries_code = )put_canaries(stack_data);)
-
-    CANARIES(ASSERT(!put_canaries_code && "put canaries error");)
+    CANARIES(ASSERT_FUNC(DEBUG_VAR(!)put_canaries(stack_data)));
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
@@ -306,7 +301,7 @@ void put_stars(FILE* file)
 }
 
 
-size_t realloc_if_up_needed(Main_Stack_Struct stack_data) // FIXME add more conditions for dead bytes
+size_t realloc_if_up_needed(Main_Stack_Struct stack_data)
 {
     if(stack_data.capacity - stack_data.size <= 1)
         return stack_data.capacity * 2;
@@ -324,7 +319,7 @@ size_t realloc_if_down_needed(Main_Stack_Struct stack_data)
 }
 
 #ifdef DEBUG
-void_sex return_error(size_t err_code, const char* file, const char* func, int line) // TODO make void
+void_sex return_error(size_t err_code, const char* file, const char* func, int line)
 {
     if(err_code != 0)
     {
@@ -402,101 +397,12 @@ size_t struct_elem_hash(const void* address, size_t size)
 #ifdef HASH_MODE
 size_t hash_struct_sum(Main_Stack_Struct *stack_data)
 {
-    // TODO nullify
-    return struct_elem_hash(stack_data, sizeof(*stack_data));
+    size_t stack_hash = stack_data->hash_stack;
+    stack_data->hash_stack = 0;
+
+    size_t return_data = struct_elem_hash(stack_data, sizeof(*stack_data));
+    stack_data->hash_stack = stack_hash;
+
+    return return_data;
 }
 #endif
-
-
-
-//TODO canary_t (d_type) cond compile I WAS RIGHT ABOUT CANARIES
-//TODO make poison instead of '\0' check 'free' poison all in debug
-//TODO push && pop - above 2 strings on release
-//TODO get data_type from console (?)
-//TODO poison before canaries (?)
-//TODO check poison by address && meaning(?) (all stack)
-//TODO memcpy???????
-//TODO hash through control sum than real hash (non cryptographic) (hash = hash * 33 xor(current byte))
-//TODO #ON_DEBUG_NOT_ASSERT assert(!...) // !!!!
-//TODO
-//TODO
-//TODO for void*: before every push/pop operation need to know size of current elem, stack size in uint8_t
-//TODO checks && realloc will depend on size of current elem
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO dead bytes in stack
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
