@@ -18,6 +18,7 @@ static const size_t Struct_Ctor_Size =  8;
 static const uint8_t Poison_Byte  = '~';
 static uint8_t Stack_Checker_Byte = '0';
 //static StackElem_t Dead_Byte = '№';
+static_assert(sizeof(StackElem_t) == 1);
 
 
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
@@ -244,6 +245,9 @@ size_t stack_is_err(Main_Stack_Struct *stack_data)
     HASH(if(stack_data->hash_stack  != stack_hash) errors_sum += WRONG_HASH;)
     if(stack_data->size > stack_data->capacity)    errors_sum += STACK_OVERFLOW;
     if(stack_data->dump_file == nullptr)           errors_sum += FILE_PTR_IS_ZERO;
+
+    for(size_t i = 0; i < stack_data->size; i++)
+        if(stack_data->stack_array[i] == Poison_Byte) errors_sum += 0x40;
 
     return errors_sum;
 }
