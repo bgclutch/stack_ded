@@ -15,10 +15,9 @@
 #endif
 
 static const size_t Struct_Ctor_Size =  8;
-static const uint8_t Poison_Byte  = '~';
-static uint8_t Stack_Checker_Byte = '0';
+static const Poison_Byte  = 123456781;
 //static StackElem_t Dead_Byte = '№';
-static_assert(sizeof(StackElem_t) == 1);
+static_assert(sizeof(StackElem_t) == 8);
 
 
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
@@ -105,7 +104,6 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     RETURN_ERROR(stack_is_err(stack_data));
     STACK_DUMP(stack_data);
-    Stack_Checker_Byte = '1';
     return ALL_IS_OK;
 }
 
@@ -117,10 +115,6 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 
     if(stack_data->size == 0)
     {
-        if(Stack_Checker_Byte == '0')
-        {
-            fprintf(stderr, GREEN_TEXT("ah ty suka nahuya vsyo slomal(\n"));
-        }
         return EMPTY_STACK;
     }
 

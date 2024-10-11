@@ -2,7 +2,7 @@
 #define STACK_H_
 
 // FLAGS
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
     #define DEBUG_VAR(...) __VA_ARGS__
@@ -41,7 +41,7 @@
 #include <stdint.h>
 
 typedef void void_sex;
-typedef char StackElem_t;
+typedef size_t StackElem_t;
 
 
 enum Error_Codes
