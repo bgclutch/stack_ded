@@ -133,9 +133,9 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 
     *elem = *(StackElem_t*)((char*)(stack_data->stack_array) + CANARIES(sizeof(canary_value)) + (--stack_data->size) * sizeof(StackElem_t));
 
-    #ifndef DEBUG
-        fprintf(stderr, "%ld\n", *elem);
-    #endif
+    // #ifndef DEBUG
+    //     fprintf(stderr, "%ld\n", *elem);
+    // #endif
 
     // DEBUG_VAR(put_stars(stack_data->dump_file));
     // fprintf(stack_data->dump_file, "popped elem '%ld'\n", *elem);)
@@ -331,7 +331,7 @@ size_t realloc_if_up_needed(Main_Stack_Struct stack_data)
 
 size_t realloc_if_down_needed(Main_Stack_Struct stack_data)
 {
-    if(4 <= stack_data.size && stack_data.size * 4 <= stack_data.capacity)
+    if(8 <= stack_data.size && stack_data.size * 4 <= stack_data.capacity)
         return stack_data.capacity / 4;
     else
         return stack_data.capacity;

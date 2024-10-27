@@ -1,0 +1,1498 @@
+**************************************************
+stack_cpps/stack.cpp ctor_stack:64
+**************************************************
+stack size: 0
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element empty 0: 14606042
+stack element empty 0 address: 0x606000000020
+
+stack element empty 1: 14606042
+stack element empty 1 address: 0x606000000028
+
+stack element empty 2: 14606042
+stack element empty 2 address: 0x606000000030
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x606000000038
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x606000000040
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x606000000048
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 1
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x606000000020
+
+stack element empty 1: 14606042
+stack element empty 1 address: 0x606000000028
+
+stack element empty 2: 14606042
+stack element empty 2 address: 0x606000000030
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x606000000038
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x606000000040
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x606000000048
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 2
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x606000000020
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x606000000028
+
+stack element empty 2: 14606042
+stack element empty 2 address: 0x606000000030
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x606000000038
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x606000000040
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x606000000048
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 3
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x606000000020
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x606000000028
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x606000000030
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x606000000038
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x606000000040
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x606000000048
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 4
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x606000000020
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x606000000028
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x606000000030
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x606000000038
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x606000000040
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x606000000048
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 5
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x606000000020
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x606000000028
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x606000000030
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x606000000038
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x606000000040
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x606000000048
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 6
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x606000000020
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x606000000028
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x606000000030
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x606000000038
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x606000000040
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x606000000048
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 7
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 8
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x606000000020
+stack address end: 0x606000000060
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x606000000020
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x606000000028
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x606000000030
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x606000000038
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x606000000040
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x606000000048
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x606000000050
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x606000000058
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 8
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 9
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element non empty 8: 1
+stack element non empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 10
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element non empty 8: 1
+stack element non empty 8 address: 0x60c000000080
+
+stack element non empty 9: 1
+stack element non empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 11
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element non empty 8: 1
+stack element non empty 8 address: 0x60c000000080
+
+stack element non empty 9: 1
+stack element non empty 9 address: 0x60c000000088
+
+stack element non empty 10: 1
+stack element non empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_push:118
+**************************************************
+stack size: 12
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element non empty 8: 1
+stack element non empty 8 address: 0x60c000000080
+
+stack element non empty 9: 1
+stack element non empty 9 address: 0x60c000000088
+
+stack element non empty 10: 1
+stack element non empty 10 address: 0x60c000000090
+
+stack element non empty 11: 1
+stack element non empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 11
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element non empty 8: 1
+stack element non empty 8 address: 0x60c000000080
+
+stack element non empty 9: 1
+stack element non empty 9 address: 0x60c000000088
+
+stack element non empty 10: 1
+stack element non empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 10
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element non empty 8: 1
+stack element non empty 8 address: 0x60c000000080
+
+stack element non empty 9: 1
+stack element non empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 9
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element non empty 8: 1
+stack element non empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 8
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element non empty 7: 1
+stack element non empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 7
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element non empty 6: 1
+stack element non empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 6
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element non empty 5: 124342
+stack element non empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 5
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element non empty 4: 1231312
+stack element non empty 4 address: 0x60c000000060
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 4
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element non empty 3: 12312
+stack element non empty 3 address: 0x60c000000058
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x60c000000060
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 3
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element non empty 2: 121
+stack element non empty 2 address: 0x60c000000050
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x60c000000058
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x60c000000060
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 2
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element non empty 1: 11
+stack element non empty 1 address: 0x60c000000048
+
+stack element empty 2: 14606042
+stack element empty 2 address: 0x60c000000050
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x60c000000058
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x60c000000060
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 1
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element non empty 0: 1
+stack element non empty 0 address: 0x60c000000040
+
+stack element empty 1: 14606042
+stack element empty 1 address: 0x60c000000048
+
+stack element empty 2: 14606042
+stack element empty 2 address: 0x60c000000050
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x60c000000058
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x60c000000060
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp stack_pop:163
+**************************************************
+stack size: 0
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element empty 0: 14606042
+stack element empty 0 address: 0x60c000000040
+
+stack element empty 1: 14606042
+stack element empty 1 address: 0x60c000000048
+
+stack element empty 2: 14606042
+stack element empty 2 address: 0x60c000000050
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x60c000000058
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x60c000000060
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
+**************************************************
+stack_cpps/stack.cpp dtor_stack:71
+**************************************************
+stack size: 0
+stack size address: 0x7ffc4f918e88
+**************************************************
+stack capacity: 16
+stack capacity address: 0x7ffc4f918e90
+**************************************************
+stack address begin: 0x60c000000040
+stack address end: 0x60c0000000c0
+**************************************************
+stack element empty 0: 14606042
+stack element empty 0 address: 0x60c000000040
+
+stack element empty 1: 14606042
+stack element empty 1 address: 0x60c000000048
+
+stack element empty 2: 14606042
+stack element empty 2 address: 0x60c000000050
+
+stack element empty 3: 14606042
+stack element empty 3 address: 0x60c000000058
+
+stack element empty 4: 14606042
+stack element empty 4 address: 0x60c000000060
+
+stack element empty 5: 14606042
+stack element empty 5 address: 0x60c000000068
+
+stack element empty 6: 14606042
+stack element empty 6 address: 0x60c000000070
+
+stack element empty 7: 14606042
+stack element empty 7 address: 0x60c000000078
+
+stack element empty 8: 14606042
+stack element empty 8 address: 0x60c000000080
+
+stack element empty 9: 14606042
+stack element empty 9 address: 0x60c000000088
+
+stack element empty 10: 14606042
+stack element empty 10 address: 0x60c000000090
+
+stack element empty 11: 14606042
+stack element empty 11 address: 0x60c000000098
+
+stack element empty 12: 14606042
+stack element empty 12 address: 0x60c0000000a0
+
+stack element empty 13: 14606042
+stack element empty 13 address: 0x60c0000000a8
+
+stack element empty 14: 14606042
+stack element empty 14 address: 0x60c0000000b0
+
+stack element empty 15: 14606042
+stack element empty 15 address: 0x60c0000000b8
+
+**************************************************
+
+
+
+
