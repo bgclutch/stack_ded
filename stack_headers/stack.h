@@ -1,7 +1,7 @@
 #ifndef STACK_H_
 #define STACK_H_
 
-// FLAGS
+// FLAGS //
 // #define DEBUG
 
 #ifdef DEBUG
@@ -56,8 +56,6 @@ enum Error_Codes
     EMPTY_STACK                = 0x20,
     POISON_IN_STACK            = 0x40,
     STACK_NOT_REALLOCED        = 0x96,
-    //ADD SOME ERRORS CODES
-    //realloc error (na podumat')
 };
 
 struct Main_Stack_Struct
@@ -112,9 +110,6 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity);
 
 
 void_sex return_error(size_t err_code, const char* file, const char* func, int line);
-
-
-//Error_Codes fill_dead_bytes(char* array, size_t size);
 
 
 Error_Codes put_canaries(Main_Stack_Struct *stack_data);
