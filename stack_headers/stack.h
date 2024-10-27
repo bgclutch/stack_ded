@@ -2,7 +2,7 @@
 #define STACK_H_
 
 // FLAGS //
-#define DEBUG
+// #define DEBUG
 
 #ifdef DEBUG
     #define DEBUG_VAR(...) __VA_ARGS__
