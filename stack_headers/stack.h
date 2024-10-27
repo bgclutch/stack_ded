@@ -2,7 +2,7 @@
 #define STACK_H_
 
 // FLAGS //
-// #define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
     #define DEBUG_VAR(...) __VA_ARGS__
@@ -64,7 +64,7 @@ struct Main_Stack_Struct
     uint64_t  left_st_canary;
     #endif
 
-    StackElem_t* stack_array;
+    void* stack_array;
     size_t              size;
     size_t          capacity;
     FILE*          dump_file;

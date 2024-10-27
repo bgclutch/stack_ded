@@ -1,3 +1,3 @@
 stack
-stack_cpps/main.o
-stack_cpps/stack.o
+main.o
+stack.o
