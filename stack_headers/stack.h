@@ -2,7 +2,7 @@
 #define STACK_H_
 
 // FLAGS //
-// #define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
     #define DEBUG_VAR(...) __VA_ARGS__
@@ -41,7 +41,9 @@
 #include <stdint.h>
 
 typedef void void_sex;
-typedef ssize_t StackElem_t;
+typedef double StackElem_t;
+
+#define EPSILON 0.0001
 
 
 enum Error_Codes
@@ -51,8 +53,8 @@ enum Error_Codes
     STACK_ARRAY_ADDRESS_IS_BAD = 0x02,
     NEG_CAPACITY               = 0x04,
     WRONG_HASH                 = 0x08,
-    STACK_OVERFLOW             = 0x0F,
-    FILE_PTR_IS_ZERO           = 0x10,
+    STACK_OVERFLOW             = 0x10,
+    FILE_PTR_IS_ZERO           = 0x18,
     EMPTY_STACK                = 0x20,
     POISON_IN_STACK            = 0x40,
     STACK_NOT_REALLOCED        = 0x96,
@@ -64,7 +66,7 @@ struct Main_Stack_Struct
     uint64_t  left_st_canary;
     #endif
 
-    StackElem_t* stack_array;
+    void* stack_array;
     size_t              size;
     size_t          capacity;
     FILE*          dump_file;

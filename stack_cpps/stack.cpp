@@ -15,14 +15,17 @@
 #endif
 
 static const size_t Struct_Ctor_Size =  8;
-static const StackElem_t Poison_Byte  = 123456781;
-//static StackElem_t Dead_Byte = '№';
+static const StackElem_t Poison_Elem  = 0xDEDEDA;
 static_assert(sizeof(StackElem_t) == 8);
 
 
 Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 {
     ASSERT(stack_data && "huy tebe a ne stack");
+
+    stack_data->dump_file = fopen("stack_output.txt", "w");
+    ASSERT(stack_data->dump_file && "dump file open error") DEBUG_VAR(;)
+    setvbuf(stack_data->dump_file, NULL, _IONBF, 0);
 
     stack_data->stack_array = (StackElem_t*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) CANARIES( +
                                                     2 * sizeof(canary_value)), sizeof(char));
@@ -39,18 +42,23 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
      stack_data->right_st_canary = canary_value;)
 
 
-    memset(stack_data->stack_array CANARIES(+ sizeof(canary_value)), Poison_Byte, stack_data->capacity);
+    // memset(stack_data->stack_array CANARIES(+ sizeof(canary_value)), Poison_Elem, stack_data->capacity);
+
+    for(size_t i = 0; i < stack_data->capacity; i++)
+    {
+        *(StackElem_t*)((char*)(stack_data->stack_array) CANARIES(+ sizeof(canary_value)) + i * sizeof(StackElem_t)) = Poison_Elem;
+    }
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
-    CANARIES(ASSERT_FUNC(DEBUG_VAR(!)put_canaries(stack_data))); // TODO macro ASSERT_FUNC
+    CANARIES(ASSERT_FUNC(DEBUG_VAR(!)put_canaries(stack_data)));
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
@@ -66,7 +74,12 @@ Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
     if(!is_struct_addresses_okay(stack_data))
         return STACK_ARRAY_ADDRESS_IS_BAD;
 
-    memset(stack_data->stack_array CANARIES(+ sizeof(canary_value)), Poison_Byte, stack_data->capacity);
+    // memset(stack_data->stack_array CANARIES(+ sizeof(canary_value)), Poison_Elem, stack_data->capacity);
+
+    for(size_t i = 0; i < stack_data->capacity; i++)
+    {
+        *((StackElem_t*)(stack_data->stack_array) + i) = Poison_Elem;
+    }
 
     stack_data->size = 0;
     stack_data->capacity = Struct_Ctor_Size;
@@ -85,7 +98,7 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     Error_Codes realloc_code = realloc_maker(stack_data, realloc_if_up_needed(*stack_data));
@@ -95,11 +108,11 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
 
     ASSERT(!realloc_code && "realloc error");
 
-    stack_data->stack_array[CANARIES(sizeof(canary_value)) + stack_data->size++] = elem;
+    *(StackElem_t*)((char*)(stack_data->stack_array) + CANARIES(sizeof(canary_value)) + (stack_data->size++) * sizeof(StackElem_t)) = elem;
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
@@ -119,21 +132,20 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
     }
 
 
-    *elem = stack_data->stack_array[CANARIES(sizeof(canary_value)) + (--stack_data->size)];
+    *elem = *(StackElem_t*)((char*)(stack_data->stack_array) + CANARIES(sizeof(canary_value)) + (--stack_data->size) * sizeof(StackElem_t));
 
-    #ifndef DEBUG
-        fprintf(stderr, "%c\n", *elem);
-    #endif
+    // #ifndef DEBUG
+    //     fprintf(stderr, "%ld\n", *elem);
+    // #endif
 
-    DEBUG_VAR
-    (put_stars(stack_data->dump_file);
-     fprintf(stack_data->dump_file, "popped elem '%c'\n", *elem);)
+    // DEBUG_VAR(put_stars(stack_data->dump_file));
+    // fprintf(stack_data->dump_file, "popped elem '%ld'\n", *elem);)
 
-    stack_data->stack_array[CANARIES(sizeof(canary_value)) + stack_data->size] = Poison_Byte;
+   *(StackElem_t*)((char*)(stack_data->stack_array) + CANARIES(sizeof(canary_value)) + (stack_data->size) * sizeof(StackElem_t)) = Poison_Elem;
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     Error_Codes realloc_code = realloc_maker(stack_data, realloc_if_down_needed(*stack_data));
@@ -145,7 +157,7 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
@@ -176,29 +188,32 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
     put_stars(stack_data->dump_file);
 
     fprintf  (stack_data->dump_file, "stack address begin: %p\n",       stack_data->stack_array);
-    fprintf  (stack_data->dump_file, "stack address end: %p\n",        &stack_data->stack_array[stack_data->capacity CANARIES(+ 2 *sizeof(canary_value))]);
+    fprintf  (stack_data->dump_file, "stack address end: %p\n",       ((char*)(stack_data->stack_array) + stack_data->capacity * sizeof(StackElem_t) CANARIES(+ 2 * sizeof(canary_value))));
     put_stars(stack_data->dump_file);
 
     CANARIES(
     fprintf(stack_data->dump_file, "left stack canary: 0x%0lx\n",   *(uint64_t*)(stack_data->stack_array));
     fprintf(stack_data->dump_file, "left stack canary address: %p\n\n",          stack_data->stack_array);)
 
+    char* stack_outp = (char*)stack_data->stack_array;
+
     for(size_t i = 0; i < stack_data->size; i++) // printing NON empty element
     {
-        fprintf(stack_data->dump_file, "stack element non empty %zu: %c\n",           i,   stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]);
-        fprintf(stack_data->dump_file, "stack element non empty %zu address: %p\n\n", i, &(stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]));
+        fprintf(stack_data->dump_file, "stack element non empty %zu: %lg\n",          i, *(StackElem_t*)(stack_outp + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
+        fprintf(stack_data->dump_file, "stack element non empty %zu address: %p\n\n", i, ((char*)(stack_data->stack_array) + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
     }
 
     for(size_t i = stack_data->size; i < stack_data->capacity; i++) // printing empty element
     {
-        fprintf(stack_data->dump_file, "stack element empty %zu: %c\n",           i,       stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]);
-        fprintf(stack_data->dump_file, "stack element empty %zu address: %p\n\n", i,     &(stack_data->stack_array[i CANARIES(+ sizeof(canary_value))]));
+        fprintf(stack_data->dump_file, "stack element empty %zu: %lg\n",          i, *(StackElem_t*)(stack_outp + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
+        fprintf(stack_data->dump_file, "stack element empty %zu address: %p\n\n", i, ((char*)(stack_data->stack_array) + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
     }
 
     CANARIES(
-    fprintf(stack_data->dump_file, "right stack canary: 0x%0lx\n", *(uint64_t*)(stack_data->stack_array  CANARIES(+ sizeof(canary_value)) + stack_data->capacity));
-    fprintf(stack_data->dump_file, "right stack canary address: %p\n",          stack_data->stack_array  CANARIES(+ sizeof(canary_value)) + stack_data->capacity);
-    put_stars(stack_data->dump_file);)
+    fprintf(stack_data->dump_file, "right stack canary: 0x%0lx\n",     *(uint64_t*)(stack_outp + stack_data->capacity * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
+    fprintf(stack_data->dump_file, "right stack canary address: %p\n", (stack_outp CANARIES(+ sizeof(canary_value)) + stack_data->capacity * sizeof(StackElem_t)));
+    put_stars(stack_data->dump_file));
+
 
     HASH(
     fprintf(stack_data->dump_file, "struct hash value: 0x%0lx\n",        stack_data->hash_struct);
@@ -217,7 +232,7 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
@@ -231,7 +246,7 @@ size_t stack_is_err(Main_Stack_Struct *stack_data)
     if(!is_struct_addresses_okay(stack_data))      return STACK_ARRAY_ADDRESS_IS_BAD;
 
     HASH(size_t my_hash = hash_struct_sum(stack_data);)
-    HASH(size_t stack_hash = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(size_t stack_hash = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                               CANARIES(+ 2 * sizeof(canary_value)));)
 
     if(stack_data->capacity <= 0)                  errors_sum += NEG_CAPACITY;
@@ -241,7 +256,7 @@ size_t stack_is_err(Main_Stack_Struct *stack_data)
     if(stack_data->dump_file == nullptr)           errors_sum += FILE_PTR_IS_ZERO;
 
     for(size_t i = 0; i < stack_data->size; i++)
-        if(stack_data->stack_array[i] == Poison_Byte) errors_sum += 0x40;
+        if(*((StackElem_t*)(stack_data->stack_array) + i) - Poison_Elem > EPSILON) errors_sum += 0x40;
 
     return errors_sum;
 }
@@ -255,8 +270,8 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity)
     if(new_capacity == stack_data->capacity)
         return ALL_IS_OK;
 
-    StackElem_t *new_array = (StackElem_t*) realloc(stack_data->stack_array,
-                                                    (new_capacity CANARIES(+ 2 * sizeof(canary_value))));
+    char *new_array = (char*) realloc(stack_data->stack_array,
+                                     (new_capacity * sizeof(StackElem_t) CANARIES(+ 2 * sizeof(canary_value))));
 
     if(new_array == nullptr)
     {
@@ -265,22 +280,29 @@ Error_Codes realloc_maker(Main_Stack_Struct *stack_data, size_t new_capacity)
     }
 
     if(new_capacity > stack_data->capacity)
-        memset((new_array + stack_data->size CANARIES(+ sizeof(canary_value))), Poison_Byte,
-              (new_capacity - stack_data->size) * sizeof(StackElem_t));
+    {
+
+        for(size_t i = stack_data->size CANARIES(+ sizeof(canary_value) / sizeof(StackElem_t)); i < new_capacity; i++)
+        {
+            *(StackElem_t*)(new_array + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))) = Poison_Elem;
+        }
+    }
+        // memset((new_array + stack_data->size CANARIES(+ sizeof(canary_value))), Poison_Elem,
+        //       (new_capacity - stack_data->size) * sizeof(StackElem_t));
 
     stack_data->capacity      = new_capacity;
     stack_data->stack_array   = new_array;
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                 CANARIES(+ 2 * sizeof(canary_value))));
 
     CANARIES(ASSERT_FUNC(DEBUG_VAR(!)put_canaries(stack_data)));
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                 CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
@@ -310,7 +332,7 @@ size_t realloc_if_up_needed(Main_Stack_Struct stack_data)
 
 size_t realloc_if_down_needed(Main_Stack_Struct stack_data)
 {
-    if(4 <= stack_data.size && stack_data.size * 4 <= stack_data.capacity)
+    if(8 <= stack_data.size && stack_data.size * 4 <= stack_data.capacity)
         return stack_data.capacity / 4;
     else
         return stack_data.capacity;
@@ -346,18 +368,6 @@ int is_struct_addresses_okay(Main_Stack_Struct *stack_data)
 }
 
 
-// Error_Codes fill_dead_bytes(char* array, size_t size)
-// {
-//     size_t num_of_dead_bytes = (size_t)array % size;
-
-//     if(!num_of_dead_bytes)
-//     {
-//         return ALL_IS_OK;
-//     }
-
-//     memset(array, Dead_Byte, num_of_dead_bytes);
-// }
-
 #ifdef CANARY_MODE
 Error_Codes put_canaries(Main_Stack_Struct *stack_data)
 {
@@ -365,11 +375,11 @@ Error_Codes put_canaries(Main_Stack_Struct *stack_data)
 
     *((uint64_t*)stack_data->stack_array) = canary_value;
 
-    *((uint64_t*)(stack_data->stack_array + sizeof(canary_value) + stack_data->capacity)) = canary_value;
+    *(StackElem_t*)((char*)(stack_data->stack_array) + sizeof(canary_value) + stack_data->capacity * sizeof(StackElem_t)) = canary_value;
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
-    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
