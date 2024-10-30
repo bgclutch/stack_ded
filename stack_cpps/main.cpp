@@ -12,7 +12,7 @@ int main(void)
 
     StackElem_t elem = 0;
 
-    StackElem_t test[] = {1, 11, 121, 12312, 1231312, 124342, 1, 1, 1, 1, 1, 1};
+    StackElem_t test[] = {1.1, 11, 121, 12312, 1231312.5675, 124342, 1, 1, 1, 1, 1, 1};
 
     ASSERT_FUNC(DEBUG_VAR(!)ctor_stack(&stack_data));
 

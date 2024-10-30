@@ -25,6 +25,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 
     stack_data->dump_file = fopen("stack_output.txt", "w");
     ASSERT(stack_data->dump_file && "dump file open error") DEBUG_VAR(;)
+    setvbuf(stack_data->dump_file, NULL, _IONBF, 0);
 
     stack_data->stack_array = (StackElem_t*) calloc(Struct_Ctor_Size * sizeof(StackElem_t) CANARIES( +
                                                     2 * sizeof(canary_value)), sizeof(char));
@@ -53,7 +54,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
     HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(StackElem_t)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
-    CANARIES(ASSERT_FUNC(DEBUG_VAR(!)put_canaries(stack_data))); // TODO macro ASSERT_FUNC
+    CANARIES(ASSERT_FUNC(DEBUG_VAR(!)put_canaries(stack_data)));
 
     HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
 
@@ -198,13 +199,13 @@ void_sex stack_dump(Main_Stack_Struct *stack_data, const char* file_name, const 
 
     for(size_t i = 0; i < stack_data->size; i++) // printing NON empty element
     {
-        fprintf(stack_data->dump_file, "stack element non empty %zu: %ld\n",          i, *(StackElem_t*)(stack_outp + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
+        fprintf(stack_data->dump_file, "stack element non empty %zu: %lg\n",          i, *(StackElem_t*)(stack_outp + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
         fprintf(stack_data->dump_file, "stack element non empty %zu address: %p\n\n", i, ((char*)(stack_data->stack_array) + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
     }
 
     for(size_t i = stack_data->size; i < stack_data->capacity; i++) // printing empty element
     {
-        fprintf(stack_data->dump_file, "stack element empty %zu: %ld\n",          i, *(StackElem_t*)(stack_outp + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
+        fprintf(stack_data->dump_file, "stack element empty %zu: %lg\n",          i, *(StackElem_t*)(stack_outp + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
         fprintf(stack_data->dump_file, "stack element empty %zu address: %p\n\n", i, ((char*)(stack_data->stack_array) + i * sizeof(StackElem_t) CANARIES(+ sizeof(canary_value))));
     }
 
@@ -255,7 +256,7 @@ size_t stack_is_err(Main_Stack_Struct *stack_data)
     if(stack_data->dump_file == nullptr)           errors_sum += FILE_PTR_IS_ZERO;
 
     for(size_t i = 0; i < stack_data->size; i++)
-        if(*((StackElem_t*)(stack_data->stack_array) + i) == Poison_Elem) errors_sum += 0x40;
+        if(*((StackElem_t*)(stack_data->stack_array) + i) - Poison_Elem > EPSILON) errors_sum += 0x40;
 
     return errors_sum;
 }
