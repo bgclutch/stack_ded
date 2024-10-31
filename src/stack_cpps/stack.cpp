@@ -23,7 +23,7 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
 {
     ASSERT(stack_data && "huy tebe a ne stack");
 
-    stack_data->dump_file = fopen("stack_output.txt", "w");
+    stack_data->dump_file = fopen("dumps/stack_output.txt", "w");
     ASSERT(stack_data->dump_file && "dump file open error") DEBUG_VAR(;)
     setvbuf(stack_data->dump_file, NULL, _IONBF, 0);
 
