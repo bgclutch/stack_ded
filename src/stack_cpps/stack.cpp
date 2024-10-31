@@ -414,3 +414,80 @@ size_t hash_struct_sum(Main_Stack_Struct *stack_data)
     return return_data;
 }
 #endif
+
+
+
+
+Error_Codes helper_stack_push(Main_Stack_Struct *stack_data, size_t elem)
+{
+    RETURN_ERROR(stack_is_err(stack_data));
+
+    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(size_t)
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+    Error_Codes realloc_code = realloc_maker(stack_data, realloc_if_up_needed(*stack_data));
+
+    if(realloc_code == STACK_NOT_REALLOCED)
+        return realloc_code;
+
+    ASSERT(!realloc_code && "realloc error");
+
+    *(size_t*)((char*)(stack_data->stack_array) + CANARIES(sizeof(canary_value)) + (stack_data->size++) * sizeof(size_t)) = elem;
+
+    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(size_t)
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+    RETURN_ERROR(stack_is_err(stack_data));
+    STACK_DUMP(stack_data);
+    return ALL_IS_OK;
+}
+
+
+Error_Codes helper_stack_pop(Main_Stack_Struct *stack_data, size_t *elem)
+{
+    ASSERT(elem);
+
+    RETURN_ERROR(stack_is_err(stack_data));
+
+    if(stack_data->size == 0)
+    {
+        return EMPTY_STACK;
+    }
+
+
+    *elem = *(size_t*)((char*)(stack_data->stack_array) + CANARIES(sizeof(canary_value)) + (--stack_data->size) * sizeof(size_t));
+
+    // #ifndef DEBUG
+    //     fprintf(stderr, "%ld\n", *elem);
+    // #endif
+
+    // DEBUG_VAR(put_stars(stack_data->dump_file));
+    // fprintf(stack_data->dump_file, "popped elem '%ld'\n", *elem);)
+
+   *(size_t*)((char*)(stack_data->stack_array) + CANARIES(sizeof(canary_value)) + (stack_data->size) * sizeof(size_t)) = Poison_Elem;
+
+    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(size_t)
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+    Error_Codes realloc_code = realloc_maker(stack_data, realloc_if_down_needed(*stack_data));
+
+    if(realloc_code == STACK_NOT_REALLOCED)
+        return realloc_code;
+
+    ASSERT(!realloc_code && "realloc error");
+
+    HASH(stack_data->hash_struct = hash_struct_sum(stack_data);)
+
+    HASH(stack_data->hash_stack = struct_elem_hash(stack_data->stack_array, stack_data->capacity * sizeof(size_t)
+                                                   CANARIES(+ 2 * sizeof(canary_value))));
+
+    RETURN_ERROR(stack_is_err(stack_data));
+    STACK_DUMP(stack_data);
+    return ALL_IS_OK;
+}

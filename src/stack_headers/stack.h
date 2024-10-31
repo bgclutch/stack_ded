@@ -123,5 +123,9 @@ size_t struct_elem_hash(const void* address, size_t size);
 size_t hash_struct_sum(Main_Stack_Struct *stack_data);
 
 
+Error_Codes helper_stack_push(Main_Stack_Struct *stack_data, size_t elem);
+
+Error_Codes helper_stack_pop(Main_Stack_Struct *stack_data, size_t *elem);
+
 
 #endif //STACK_H
