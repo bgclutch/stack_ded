@@ -62,14 +62,14 @@ Error_Codes ctor_stack(Main_Stack_Struct *stack_data)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
-    STACK_DUMP(stack_data);
+    // STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
 
 Error_Codes dtor_stack(Main_Stack_Struct *stack_data)
 {
     RETURN_ERROR(stack_is_err(stack_data));
-    STACK_DUMP(stack_data);
+    // STACK_DUMP(stack_data);
 
     if(!is_struct_addresses_okay(stack_data))
         return STACK_ARRAY_ADDRESS_IS_BAD;
@@ -116,7 +116,7 @@ Error_Codes stack_push(Main_Stack_Struct *stack_data, StackElem_t elem)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
-    STACK_DUMP(stack_data);
+    // STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
 
@@ -161,7 +161,7 @@ Error_Codes stack_pop(Main_Stack_Struct *stack_data, StackElem_t *elem)
                                                    CANARIES(+ 2 * sizeof(canary_value))));
 
     RETURN_ERROR(stack_is_err(stack_data));
-    STACK_DUMP(stack_data);
+    // STACK_DUMP(stack_data);
     return ALL_IS_OK;
 }
 
